@@ -1,0 +1,1446 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Worksheet 1: R Basics},
+  pdfauthor={Lucas Avelar},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Worksheet 1: R Basics}
+\author{Lucas Avelar}
+\date{2023-01-30}
+
+\begin{document}
+\maketitle
+
+\emph{This is the first in a series of worksheets for History 8510 at
+Clemson University. The goal of these worksheets is simple: practice,
+practice, practice. The worksheet introduces concepts and techniques and
+includes prompts for you to practice in this interactive document.}
+
+\hypertarget{what-is-r}{%
+\subsection{What is R?}\label{what-is-r}}
+
+To start let's define what exactly R is. R is a language and environment
+for statistical computing and graphics. R provides a variety of
+statistical and graphical techniques and its very extensible which makes
+it an ideal language for historians.
+
+\hypertarget{foundational-concepts}{%
+\subsection{Foundational Concepts}\label{foundational-concepts}}
+
+\hypertarget{values}{%
+\subsubsection{Values}\label{values}}
+
+There are several kinds of variables in R. Numeric, logical, and
+strings.
+
+R takes inputs and returns an output. So for example, if our input is a
+number the output will be a number. Simply typing a number, below or in
+the console, will return a number.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+Same thing happens if we add a number with a variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{5.5483}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5.5483
+\end{verbatim}
+
+Numbers can be used to do arithmetic.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \SpecialCharTok{+} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  You try, multiple two numbers.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \SpecialCharTok{*} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Can you multiply two numbers and then divide by the result?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{2} \SpecialCharTok{*} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{20} \SpecialCharTok{/} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+The next type of value is a string. Strings are lines of text. Sometimes
+these are referred to as character vectors. To create a string, you add
+text between two quotation marks. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"Go Tigers"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Go Tigers"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Try to create your own string.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\StringTok{"Go Luc! Learning R is fun."}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Go Luc! Learning R is fun."
+\end{verbatim}
+
+You can't add strings using \texttt{+} like you can numbers. But there
+is a function called \texttt{paste()} which concatenates character
+vectors into one. This function is \emph{very} useful and one you'll use
+a lot in a variety of circumstances. Here's what that looks like:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Hello"}\NormalTok{, }\StringTok{"Clemson Graduate Students"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Hello Clemson Graduate Students"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Try it, add two strings together like the above example.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste}\NormalTok{(}\StringTok{"Mondays"}\NormalTok{, }\StringTok{"can be dreadful"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mondays can be dreadful"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Can you explain what happened in 2-3 sentences?
+\end{enumerate}
+
+\begin{quote}
+The paste function put together two different strings into one. Since
+``Mondays'' and ``can be dreadful'' count as two strings in quotations,
+paste reads both as two character vectors.
+\end{quote}
+
+The last type are logical values like \texttt{TRUE} and \texttt{FALSE}.
+(Note that these are all caps.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ConstantTok{TRUE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ConstantTok{FALSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+These logical values are really useful for testing a statement and
+comparing values to each other. For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \SpecialCharTok{\textless{}} \DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+3 is indeed less than 4 so the return value is \texttt{TRUE}. Here are a
+few more examples:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \SpecialCharTok{==} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \SpecialCharTok{\textless{}} \DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \SpecialCharTok{==} \DecValTok{4} \SpecialCharTok{|} \DecValTok{3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Explain, what does the code on each line above do?
+\end{enumerate}
+
+\begin{quote}
+the first line says that 5 is equal to 10, so the output is FALSE. the
+second code line says 3 is less than 4 so the output is TRUE. the third
+like says that 3 is either equal to 4 or equal to 3, so the output is
+TRUE.
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Create your own comparison.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{10} \SpecialCharTok{==} \DecValTok{40}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{40} \SpecialCharTok{\textless{}} \DecValTok{45}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{100} \SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{|} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\hypertarget{i-dont-understand-why-the-third-line-in-the-code-above-runs-an-output-of-true-i-was-hoping-for-an-output-of-false.}{%
+\subsection{\textgreater{} I don't understand why the third line in the
+code above runs an output of TRUE\ldots{} I was hoping for an output of
+FALSE.}\label{i-dont-understand-why-the-third-line-in-the-code-above-runs-an-output-of-true-i-was-hoping-for-an-output-of-false.}}
+
+Values are great but they are made so much more powerful when combined
+with \textbf{Variables} which are a crucial building block of any
+programming language. Simply put, a variable stores a value. For example
+if I want x to equal 5 I can do that like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{\textless{}-} is known as an assignment operator. Technically,
+you could use \texttt{=:} here too but it is considered bad practice and
+can cause complicated issues when you write more advanced code. So its
+important to stick with \texttt{\textless{}-} whenever you are coding in
+R.
+
+I can also add a string or character vector to a variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \StringTok{"Go Tigers!"}
+\end{Highlighting}
+\end{Shaded}
+
+Variable names can be almost anything.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MyFavoriteNumber }\OtherTok{\textless{}{-}} \DecValTok{25}
+\end{Highlighting}
+\end{Shaded}
+
+Variable or object names must start with a letter, and can only contain
+letters, numbers, \texttt{\_}, and \texttt{.}. You want your object
+names to be descriptive, so you'll need a convention for multiple words.
+People do it different ways. I tend to use periods but there are several
+options:
+
+\begin{verbatim}
+i_use_snake_case 
+otherPeopleUseCamelCase 
+some.people.use.periods 
+And_aFew.People_RENOUNCEconvention
+\end{verbatim}
+
+Whatever you prefer, be consistent and your future self will thank you
+when your code gets more complex.
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  You try, create a variable and assign it a number:
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MyFirstVariable }\OtherTok{\textless{}{-}} \DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  Can you assign a string to a variable?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MyNameInAVariable }\OtherTok{\textless{}{-}} \StringTok{"Luc"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  Once we've assigned a variable we can use that variable to run
+  calculations just like we did with raw numbers.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{25}
+\NormalTok{x }\SpecialCharTok{*} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 125
+\end{verbatim}
+
+R can also handle more complex equations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(x }\SpecialCharTok{+}\NormalTok{ x)}\SpecialCharTok{/}\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(x }\SpecialCharTok{+}\NormalTok{ x }\SpecialCharTok{*}\NormalTok{ x) }\SpecialCharTok{{-}} \DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 550
+\end{verbatim}
+
+And we could store the output of a calculation in a new variable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{My.Calculation }\OtherTok{\textless{}{-}}\NormalTok{ (x }\SpecialCharTok{+}\NormalTok{ x)}\SpecialCharTok{*}\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{10}
+\tightlist
+\item
+  You try. Assign a number to x and a number to y. Add those two numbers
+  together.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \DecValTok{5}
+\NormalTok{y }\OtherTok{\textless{}{-}} \DecValTok{10}
+
+\NormalTok{y }\SpecialCharTok{+}\NormalTok{ x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{11}
+\tightlist
+\item
+  Can you take \texttt{x} and \texttt{y} and multiply the result by 5?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(x }\SpecialCharTok{+}\NormalTok{ y)}\SpecialCharTok{*}\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 75
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{12}
+\tightlist
+\item
+  Try creating two variables with names other than \texttt{x} and
+  \texttt{y}. Descriptive names tend to be more useful. Can you multiply
+  the contents of your variables?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Spring }\OtherTok{\textless{}{-}} \DecValTok{8510}
+\NormalTok{Fall }\OtherTok{\textless{}{-}} \DecValTok{8500}
+
+\NormalTok{Spring }\SpecialCharTok{*}\NormalTok{ Fall}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 72335000
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{13}
+\tightlist
+\item
+  Try creating two variables that store strings. Can you concatenate
+  those two variables together?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OtherTok{\textless{}{-}} \StringTok{"Mondays"}
+\NormalTok{b }\OtherTok{\textless{}{-}} \StringTok{"Can also be fun"}
+
+\FunctionTok{paste}\NormalTok{(}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "a b"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{paste}\NormalTok{(a, b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Mondays Can also be fun"
+\end{verbatim}
+
+If we have a lot of code and rely on just variables, we're going to have
+a lot of variables. That's where vectors come into play. Vectors allow
+you to store multiple values. All variables in R are actually already
+vectors. That's why when R prints an output, there is a \texttt{{[}1{]}}
+before it. That means there is one item in that vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvalue }\OtherTok{\textless{}{-}} \StringTok{"George Washington"}
+\NormalTok{myvalue}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "George Washington"
+\end{verbatim}
+
+In this instance ``George Washington'' is the only item in the variable
+myvalue. But we could add more. To do that we use the \texttt{c()}
+function which combines values into a vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvalue }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"George Washington"}\NormalTok{, }\StringTok{"Franklin Roosevelt"}\NormalTok{, }\StringTok{"John Adams"}\NormalTok{)}
+\NormalTok{myvalue}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "George Washington"  "Franklin Roosevelt" "John Adams"
+\end{verbatim}
+
+You'll notice that the output still only shows \texttt{{[}1{]}} but that
+doesn't mean there is only one item in the list. It simply means George
+Washington is the first. If we use \texttt{length()} we can determine
+the number of items in this vector list.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(myvalue)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+We could get the value of the 2nd or 3rd item in that list like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myvalue[}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Franklin Roosevelt"
+\end{verbatim}
+
+We could also create a vector of numbers:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my.numbers }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+And we could then do calculations based on these values:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my.numbers }\SpecialCharTok{*} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4  8 12 16
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{14}
+\tightlist
+\item
+  Explain in a few sentences, what happened in the code above?
+\end{enumerate}
+
+\begin{quote}
+the funcion c() was used to create a vector with 4 items. when
+multiplying the variable my.numbers per 2, the code runs an output with
+the results of each item of the variable (2, 4, 6, and 8).
+\end{quote}
+
+Lets try something slightly different.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{my.numbers[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{15}
+\tightlist
+\item
+  Explain in a few sentences, what happened in the code above?
+\end{enumerate}
+
+\begin{quote}
+the function (is it also called a function in this case?)
+my.numbers{[}3{]} * 2 took the third item of the variable my.numbers (6)
+and multiplied it per 2.
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{16}
+\tightlist
+\item
+  You try, create a list of five items and store it in a descriptive
+  variable.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{groceries.list }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"avocado"}\NormalTok{, }\StringTok{"bell peppers"}\NormalTok{, }\StringTok{"lemonade"}\NormalTok{, }\StringTok{"ground beef"}\NormalTok{, }\StringTok{"tortillas"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+R also has \textbf{built in functions}. We've already used a couple of
+these: \texttt{paste()} and \texttt{c()}. But there are others, like
+\texttt{sqrt()} which does what you think it does, finds the square root
+of a number.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sqrt}\NormalTok{(}\DecValTok{1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 31.62278
+\end{verbatim}
+
+Many functions have options that can be added to them. For example, the
+\texttt{round()} function allows you to include an option specifying how
+many digits to round to.
+
+You can run it without that option and it'll use the default:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FloatTok{15.492827349}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15
+\end{verbatim}
+
+Or we can tell it to round it to 2 decimal places.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FloatTok{15.492827349}\NormalTok{, }\AttributeTok{digits =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15.49
+\end{verbatim}
+
+How would you know what options are available for each function in R?
+Every function and package in R comes with \textbf{documentation} or a
+\textbf{manual} that is built into R studio and can be pulled by by
+typing a question mark in front of the function in your console. These
+packages will commonly give you examples of how to use the function and
+syntax for doing so. They are incredibly useful.
+
+We can ask R to pull up the documentation like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?}\FunctionTok{round}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{17}
+\tightlist
+\item
+  Now you try, find the documentation for the function
+  \texttt{signif()}.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?}\FunctionTok{signif}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+In real life, you typically you wouldn't want to store this code in your
+script file. You probably don't need to pull up the documentation for
+the function every time you run that piece of code. But for the purposes
+of this worksheet we're adding it to our \texttt{.Rmd} document.
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{18}
+\tightlist
+\item
+  Use the console to find the documentation for \texttt{floor()}? Try it
+  and then tell me, what does that function do? \textless{}
+  \textgreater{} the `floor()' function takes a single numeric argument
+  x and returns a numeric vector that contains the largest integers not
+  greater than the elements of x.
+\end{enumerate}
+
+\hypertarget{data-frames-packages}{%
+\subsubsection{Data Frames \& Packages}\label{data-frames-packages}}
+
+R is the language of choice for most data scientists and that is because
+of its powerful suite of data analysis tools. Some are built into R,
+like the \texttt{floor()} which we looked at above. But others come from
+packages. Most programming languages have some sort of package system
+although every language calls it a slightly different thing. Ruby has
+gems, python has eggs, and php has libraries. In R these are called
+packages or libraries and they are hosted by the Comprehensive R Archive
+Network or more commonly, CRAN. CRAN is a network of ftp and web servers
+around the world that store identical, up-to-date, versions of code and
+documentation for R. You didn't know it but you already used CRAN when
+you looked up the documentation for \texttt{floor()} above. If you go to
+the CRAN webpage and look at the
+\href{https://cran.r-project.org/web/packages/available_packages_by_name.html}{list
+of available R packages} you'll see just how many there are!
+
+So there are many packages but there are also some that are
+indispensable and that you'll use over and over for this class. We'll
+get into some of those in the next two worksheets but for now lets look
+at one basic package for data.
+
+Lets start with the \texttt{tibble()} package which allows you to create
+and work with \textbf{data frames}. What is a data frame? Think of it as
+a spreadsheet. Each column can contain data - including numbers,
+strings, and logical values.
+
+Lets load the \texttt{tibble()} package. If you have this package
+installed this line of code will work. If not, you'll get an error that
+says something like:
+\texttt{\#\#\ Error\ in\ library("tibble"):\ there\ is\ no\ package\ called\ \textquotesingle{}tibble\textquotesingle{}}.
+If that's the case (it probably is), then no worries - we can install
+it. To install a package run \texttt{install.packages("tibble")} in your
+console and R will download and install the package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tibble)}
+\end{Highlighting}
+\end{Shaded}
+
+While we're at it, lets also install the data package that I've created
+for our class. This package contains a variety of historical datasets
+that you can use to complete your assignments this semester. However,
+this package is not on CRAN. That's okay though, we can still install it
+from github. To do that we'll need to use the \texttt{devtools} package.
+We'll install devtools and then use it to install our class's package
+which is hosted on GitHub.
+
+First, install the \texttt{devtools} package.
+
+Our class's package is called \texttt{DigitalMethodsData} and its hosted
+on \href{https://github.com/regan008/DigitalMethodsData}{GitHub}. Use
+the directions on the repository page and what you learned about
+packages above to install this package.
+
+After installing the package, we should load it:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(DigitalMethodsData)}
+\end{Highlighting}
+\end{Shaded}
+
+What kind of datasets are available in this package? We can use the help
+documentation to find out.
+
+Run \texttt{help(package="DigitalMethodsData")} in your console to pull
+up a list of datasets included in this package.
+
+For demonstration purposes we'll use the \texttt{gayguides} data here.
+Pull up the help documentation for this package. What is the scope of
+this dataset?
+
+\begin{quote}
+The gayguides dataset contains information transcriped from Bob Damron's
+Address Books from 1965 through 1985 and it was last updated December
+2022.
+\end{quote}
+
+To use a dataset included in this package we first need to load it. We
+can do so like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(gayguides)}
+\end{Highlighting}
+\end{Shaded}
+
+Notice that you now have a loaded dataset in your environment pane. It
+shows us that there are 60,698 observations (rows) of data and 14
+variables.
+
+Let's now look at our data. You can use the \texttt{head()} function to
+return the first part of an object or dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(gayguides)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X   ID        title                   description streetaddress
+## 1 1 3213       'B.A.'               (woods & ponds)              
+## 2 2 2265 'B.A.' Beach                      2 mi. E.        Rte. 2
+## 3 3 3269 'B.A.' Beach            nr. Salt Air Beach              
+## 4 4 3388 'B.A.' Beach nr. Evergreen Floating Bridge              
+## 5 5 3508 'B.A.' Beach          (2 mi. E. on Rte. 2)              
+## 6 6 5116 'B.A.' Beach nr. Evergreen Floating Bridge              
+##             type amenityfeatures           city state Year notes      lat
+## 1 Cruising Areas     Cruisy Area    Lake Placid    NY 1982       44.27949
+## 2 Cruising Areas     Cruisy Area           Troy    NY 1981       42.72841
+## 3 Cruising Areas     Cruisy Area Salt Lake City    UT 1981       40.74781
+## 4 Cruising Areas     Cruisy Area        Seattle    WA 1981       47.60621
+## 5 Cruising Areas     Cruisy Area           Troy    NY 1982       42.72841
+## 6 Cruising Areas     Cruisy Area        Seattle    WA 1983       47.60621
+##          lon
+## 1  -73.97987
+## 2  -73.69178
+## 3 -112.18727
+## 4 -122.33207
+## 5  -73.69178
+## 6 -122.33207
+##                                                                       status
+## 1 Location could not be verified. General city or location coordinates used.
+## 2 Location could not be verified. General city or location coordinates used.
+## 3 Location could not be verified. General city or location coordinates used.
+## 4 Location could not be verified. General city or location coordinates used.
+## 5 Location could not be verified. General city or location coordinates used.
+## 6 Location could not be verified. General city or location coordinates used.
+\end{verbatim}
+
+That gives us the first 6 rows of data. Its really useful if you just
+want to peak into the dataset but don't want to print out all 60k+ rows.
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{19}
+\tightlist
+\item
+  The default is to print six rows of data. Can you modify the above
+  code to print out the first 10 rows?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(gayguides, }\AttributeTok{rows=}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X   ID        title                   description streetaddress
+## 1 1 3213       'B.A.'               (woods & ponds)              
+## 2 2 2265 'B.A.' Beach                      2 mi. E.        Rte. 2
+## 3 3 3269 'B.A.' Beach            nr. Salt Air Beach              
+## 4 4 3388 'B.A.' Beach nr. Evergreen Floating Bridge              
+## 5 5 3508 'B.A.' Beach          (2 mi. E. on Rte. 2)              
+## 6 6 5116 'B.A.' Beach nr. Evergreen Floating Bridge              
+##             type amenityfeatures           city state Year notes      lat
+## 1 Cruising Areas     Cruisy Area    Lake Placid    NY 1982       44.27949
+## 2 Cruising Areas     Cruisy Area           Troy    NY 1981       42.72841
+## 3 Cruising Areas     Cruisy Area Salt Lake City    UT 1981       40.74781
+## 4 Cruising Areas     Cruisy Area        Seattle    WA 1981       47.60621
+## 5 Cruising Areas     Cruisy Area           Troy    NY 1982       42.72841
+## 6 Cruising Areas     Cruisy Area        Seattle    WA 1983       47.60621
+##          lon
+## 1  -73.97987
+## 2  -73.69178
+## 3 -112.18727
+## 4 -122.33207
+## 5  -73.69178
+## 6 -122.33207
+##                                                                       status
+## 1 Location could not be verified. General city or location coordinates used.
+## 2 Location could not be verified. General city or location coordinates used.
+## 3 Location could not be verified. General city or location coordinates used.
+## 4 Location could not be verified. General city or location coordinates used.
+## 5 Location could not be verified. General city or location coordinates used.
+## 6 Location could not be verified. General city or location coordinates used.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(gayguides, }\AttributeTok{row=}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   X   ID        title                   description streetaddress
+## 1 1 3213       'B.A.'               (woods & ponds)              
+## 2 2 2265 'B.A.' Beach                      2 mi. E.        Rte. 2
+## 3 3 3269 'B.A.' Beach            nr. Salt Air Beach              
+## 4 4 3388 'B.A.' Beach nr. Evergreen Floating Bridge              
+## 5 5 3508 'B.A.' Beach          (2 mi. E. on Rte. 2)              
+## 6 6 5116 'B.A.' Beach nr. Evergreen Floating Bridge              
+##             type amenityfeatures           city state Year notes      lat
+## 1 Cruising Areas     Cruisy Area    Lake Placid    NY 1982       44.27949
+## 2 Cruising Areas     Cruisy Area           Troy    NY 1981       42.72841
+## 3 Cruising Areas     Cruisy Area Salt Lake City    UT 1981       40.74781
+## 4 Cruising Areas     Cruisy Area        Seattle    WA 1981       47.60621
+## 5 Cruising Areas     Cruisy Area           Troy    NY 1982       42.72841
+## 6 Cruising Areas     Cruisy Area        Seattle    WA 1983       47.60621
+##          lon
+## 1  -73.97987
+## 2  -73.69178
+## 3 -112.18727
+## 4 -122.33207
+## 5  -73.69178
+## 6 -122.33207
+##                                                                       status
+## 1 Location could not be verified. General city or location coordinates used.
+## 2 Location could not be verified. General city or location coordinates used.
+## 3 Location could not be verified. General city or location coordinates used.
+## 4 Location could not be verified. General city or location coordinates used.
+## 5 Location could not be verified. General city or location coordinates used.
+## 6 Location could not be verified. General city or location coordinates used.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(gayguides, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     X   ID        title                        description streetaddress
+## 1   1 3213       'B.A.'                    (woods & ponds)              
+## 2   2 2265 'B.A.' Beach                           2 mi. E.        Rte. 2
+## 3   3 3269 'B.A.' Beach                 nr. Salt Air Beach              
+## 4   4 3388 'B.A.' Beach      nr. Evergreen Floating Bridge              
+## 5   5 3508 'B.A.' Beach               (2 mi. E. on Rte. 2)              
+## 6   6 5116 'B.A.' Beach      nr. Evergreen Floating Bridge              
+## 7   7  780 'B.A.' Beach on Russian River, at Wohler Bridge              
+## 8   8 3810 'B.A.' Beach                           2 mi. E.        Rte. 2
+## 9   9 4979 'B.A.' Beach                 nr. Salt Air Beach              
+## 10 10 5191 'B.A.' Beach      nr. Evergreen Floating Bridge              
+##              type amenityfeatures           city state Year notes      lat
+## 1  Cruising Areas     Cruisy Area    Lake Placid    NY 1982       44.27949
+## 2  Cruising Areas     Cruisy Area           Troy    NY 1981       42.72841
+## 3  Cruising Areas     Cruisy Area Salt Lake City    UT 1981       40.74781
+## 4  Cruising Areas     Cruisy Area        Seattle    WA 1981       47.60621
+## 5  Cruising Areas     Cruisy Area           Troy    NY 1982       42.72841
+## 6  Cruising Areas     Cruisy Area        Seattle    WA 1983       47.60621
+## 7  Cruising Areas     Cruisy Area  Russian River    CA 1983       38.91163
+## 8  Cruising Areas     Cruisy Area           Troy    NY 1983       42.72841
+## 9  Cruising Areas     Cruisy Area Salt Lake City    UT 1983       40.74781
+## 10 Cruising Areas     Cruisy Area        Seattle    WA 1984       47.60621
+##           lon
+## 1   -73.97987
+## 2   -73.69178
+## 3  -112.18727
+## 4  -122.33207
+## 5   -73.69178
+## 6  -122.33207
+## 7  -123.01105
+## 8   -73.69178
+## 9  -112.18727
+## 10 -122.33207
+##                                                                        status
+## 1  Location could not be verified. General city or location coordinates used.
+## 2  Location could not be verified. General city or location coordinates used.
+## 3  Location could not be verified. General city or location coordinates used.
+## 4  Location could not be verified. General city or location coordinates used.
+## 5  Location could not be verified. General city or location coordinates used.
+## 6  Location could not be verified. General city or location coordinates used.
+## 7  Location could not be verified. General city or location coordinates used.
+## 8  Location could not be verified. General city or location coordinates used.
+## 9  Location could not be verified. General city or location coordinates used.
+## 10 Location could not be verified. General city or location coordinates used.
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{20}
+\tightlist
+\item
+  Can you find the last 6 rows of data?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tail}\NormalTok{(gayguides, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           X    ID           title               description streetaddress
+## 60693 60693 PR351       Boccachio            (Natives only)              
+## 60694 60694 PR366       Boccachio            (Natives only)              
+## 60695 60695 PR377       Boccachio            (Natives only)              
+## 60696 60696 GU002   Mi Elena Club (Inquire locally) (Agana)          <NA>
+## 60697 60697 GU015 Star Cafe & Bar Downtown, opp. Agana Loop          <NA>
+## 60698 60698 GU019 Star Cafe & Bar Downtown, opp. Agana Loop          <NA>
+##             type
+## 60693 Bars/Clubs
+## 60694 Bars/Clubs
+## 60695 Bars/Clubs
+## 60696 Bars/Clubs
+## 60697 Bars/Clubs
+## 60698 Bars/Clubs
+##                                                                                   amenityfeatures
+## 60693                                                                                     (G),(*)
+## 60694                                                                                         (G)
+## 60695                                                                                         (L)
+## 60696                                                         (M) - Mixed Crowds - Some Straights
+## 60697 (M) - Mixed Crowds - Some Straights,(YC) - Young and/or collegiate types,(*) - Very popular
+## 60698 (M) - Mixed Crowds - Some Straights,(YC) - Young and/or collegiate types,(*) - Very popular
+##           city state Year notes      lat       lon
+## 60693 Hato Ray    PR 1977       18.42258 -66.05096
+## 60694 Hato Ray    PR 1979       18.42258 -66.05096
+## 60695 Hato Ray    PR 1980       18.42258 -66.05096
+## 60696    Agana    GU 1980  <NA> 13.47628 144.75022
+## 60697    Agana    GU 1975  <NA> 13.47628 144.75022
+## 60698    Agana    GU 1974  <NA> 13.47628 144.75022
+##                                                                           status
+## 60693 Location could not be verified. General city or location coordinates used.
+## 60694 Location could not be verified. General city or location coordinates used.
+## 60695 Location could not be verified. General city or location coordinates used.
+## 60696 Location could not be verified. General city or location coordinates used.
+## 60697 Location could not be verified. General city or location coordinates used.
+## 60698 Location could not be verified. General city or location coordinates used.
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{21}
+\tightlist
+\item
+  Reflect on the previous two prompts. How did you figure these out?
+  \textgreater{} I Googled it (lmao). I searched ``how to see 10 rows of
+  a dataset in R'' and it showed me the functions `head()' and `tail()'.
+  It also taught me a different way that would be `gayguides{[}1:10{]}'
+  for an output of the first 10 rows.
+\end{enumerate}
+
+The \texttt{str()} function is another very useful function for
+understanding a dataset. It compactly displays the internal structure of
+an R object.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(gayguides)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    60698 obs. of  14 variables:
+##  $ X              : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ ID             : chr  "3213" "2265" "3269" "3388" ...
+##  $ title          : chr  "'B.A.'" "'B.A.' Beach" "'B.A.' Beach" "'B.A.' Beach" ...
+##  $ description    : chr  "(woods & ponds)" "2 mi. E." "nr. Salt Air Beach" "nr. Evergreen Floating Bridge" ...
+##  $ streetaddress  : chr  "" "Rte. 2" "" "" ...
+##  $ type           : chr  "Cruising Areas" "Cruising Areas" "Cruising Areas" "Cruising Areas" ...
+##  $ amenityfeatures: chr  "Cruisy Area" "Cruisy Area" "Cruisy Area" "Cruisy Area" ...
+##  $ city           : chr  "Lake Placid" "Troy" "Salt Lake City" "Seattle" ...
+##  $ state          : chr  "NY" "NY" "UT" "WA" ...
+##  $ Year           : int  1982 1981 1981 1981 1982 1983 1983 1983 1983 1984 ...
+##  $ notes          : chr  "" "" "" "" ...
+##  $ lat            : num  44.3 42.7 40.7 47.6 42.7 ...
+##  $ lon            : num  -74 -73.7 -112.2 -122.3 -73.7 ...
+##  $ status         : chr  "Location could not be verified. General city or location coordinates used." "Location could not be verified. General city or location coordinates used." "Location could not be verified. General city or location coordinates used." "Location could not be verified. General city or location coordinates used." ...
+\end{verbatim}
+
+There is a ton of useful info here. First, we see that this is a
+data.frame and that it has 60698 obs. of 14 variables. Second, we see
+the names of all the variables (columns) in the dataset. Lastly, it
+shows us what type of data is contained in each variable. For example,
+the variable \texttt{state} is a chr or character vector while
+\texttt{Year} (note the capitalization) is numeric.
+
+The \texttt{\$} operator allows us to get a segment of the data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(gayguides}\SpecialCharTok{$}\NormalTok{title)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "'B.A.'"       "'B.A.' Beach" "'B.A.' Beach" "'B.A.' Beach" "'B.A.' Beach"
+## [6] "'B.A.' Beach"
+\end{verbatim}
+
+While that's useful, this particular dataset happens to be sorted by
+title. So the first rows are all labeled some version of B.A. beach.
+That's not very useful. What if we want to see the 500th item in this
+list? Well, we can pull that up like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gayguides}\SpecialCharTok{$}\NormalTok{title[}\DecValTok{500}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "'Rest Stop'"
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{22}
+\item
+  Break this down. Whats going on here? What do each of the elements of
+  this code mean? (gayguides,
+  \(, title, and [500]) > in this function, we are pulling the 500th item of the title column (variable) in the gayguides dataset. The '\)'
+  operator pulls one particular segment of the data, so this is helpful
+  if we need to pull up a specific value out of the whole dataset.
+\item
+  The Year variable contains the year (numeric) of each entry. Can you
+  find the earliest year in this dataset? (Using code, don't cheat and
+  use the documentation!)
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(gayguides}\SpecialCharTok{$}\NormalTok{Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1965
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{24}
+\tightlist
+\item
+  How about the latest year?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{max}\NormalTok{(gayguides}\SpecialCharTok{$}\NormalTok{Year)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1985
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{25}
+\tightlist
+\item
+  Add another dataset from \texttt{DigitalMethodsData}. How many
+  observations are included in this dataset? Run through some of the
+  examples from above to learn about the dataset.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(}\StringTok{"statepopulations"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(statepopulations, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    GISJOIN              STATE STATEFP STATENH X1790 X1800 X1810  X1820  X1830
+## 1     G010            Alabama       1      10    NA    NA    NA 127901 309527
+## 2     G020             Alaska       2      20    NA    NA    NA     NA     NA
+## 3     G025   Alaska Territory      NA      25    NA    NA    NA     NA     NA
+## 4     G040            Arizona       4      40    NA    NA    NA     NA     NA
+## 5     G045  Arizona Territory      NA      45    NA    NA    NA     NA     NA
+## 6     G050           Arkansas       5      50    NA    NA    NA     NA     NA
+## 7     G055 Arkansas Territory      NA      55    NA    NA    NA  14273  30388
+## 8     G060         California       6      60    NA    NA    NA     NA     NA
+## 9     G080           Colorado       8      80    NA    NA    NA     NA     NA
+## 10    G085 Colorado Territory      NA      85    NA    NA    NA     NA     NA
+##     X1840  X1850  X1860  X1870   X1880   X1890   X1900   X1910   X1920   X1930
+## 1  590756 771623 964201 996992 1262505 1513017 1828697 2138093 2348174 2646248
+## 2      NA     NA     NA     NA      NA      NA      NA      NA      NA      NA
+## 3      NA     NA     NA     NA   33426   32052   63592   64356   55036   59278
+## 4      NA     NA     NA     NA      NA      NA      NA      NA  334162  435573
+## 5      NA     NA     NA   9658   40440   59620  122931  204354      NA      NA
+## 6   97574 209897 435450 484471  802525 1128179 1311564 1574449 1752204 1854482
+## 7      NA     NA     NA     NA      NA      NA      NA      NA      NA      NA
+## 8      NA  92597 379994 560247  864694 1208130 1485053 2377549 3426861 5677251
+## 9      NA     NA     NA     NA  194327  412198  539700  799024  939629 1035791
+## 10     NA     NA  34277  39864      NA      NA      NA      NA      NA      NA
+##      X1940    X1950    X1960    X1970    X1980    X1990    X2000    X2010
+## 1  2832961  3061743  3266740  3444165  3893888  4040587  4447100  4779736
+## 2       NA       NA   226167   300382   401851   550043   626932   710231
+## 3    72524   128643       NA       NA       NA       NA       NA       NA
+## 4   499261   749587  1302161  1770900  2718215  3665228  5130632  6392017
+## 5       NA       NA       NA       NA       NA       NA       NA       NA
+## 6  1949387  1909511  1786272  1923295  2286435  2350725  2673400  2915918
+## 7       NA       NA       NA       NA       NA       NA       NA       NA
+## 8  6907387 10586224 15717204 19953134 23667902 29760021 33871648 37253956
+## 9  1123296  1325089  1753947  2207259  2889964  3294394  4301261  5029196
+## 10      NA       NA       NA       NA       NA       NA       NA       NA
+##       X2020
+## 1   5024279
+## 2    733391
+## 3        NA
+## 4   7151502
+## 5        NA
+## 6   3011524
+## 7        NA
+## 8  39538223
+## 9   5773714
+## 10       NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(statepopulations)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    84 obs. of  28 variables:
+##  $ GISJOIN: chr  "G010" "G020" "G025" "G040" ...
+##  $ STATE  : chr  "Alabama" "Alaska" "Alaska Territory" "Arizona" ...
+##  $ STATEFP: int  1 2 NA 4 NA 5 NA 6 8 NA ...
+##  $ STATENH: int  10 20 25 40 45 50 55 60 80 85 ...
+##  $ X1790  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ X1800  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ X1810  : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ X1820  : int  127901 NA NA NA NA NA 14273 NA NA NA ...
+##  $ X1830  : int  309527 NA NA NA NA NA 30388 NA NA NA ...
+##  $ X1840  : int  590756 NA NA NA NA 97574 NA NA NA NA ...
+##  $ X1850  : int  771623 NA NA NA NA 209897 NA 92597 NA NA ...
+##  $ X1860  : int  964201 NA NA NA NA 435450 NA 379994 NA 34277 ...
+##  $ X1870  : int  996992 NA NA NA 9658 484471 NA 560247 NA 39864 ...
+##  $ X1880  : int  1262505 NA 33426 NA 40440 802525 NA 864694 194327 NA ...
+##  $ X1890  : int  1513017 NA 32052 NA 59620 1128179 NA 1208130 412198 NA ...
+##  $ X1900  : int  1828697 NA 63592 NA 122931 1311564 NA 1485053 539700 NA ...
+##  $ X1910  : int  2138093 NA 64356 NA 204354 1574449 NA 2377549 799024 NA ...
+##  $ X1920  : int  2348174 NA 55036 334162 NA 1752204 NA 3426861 939629 NA ...
+##  $ X1930  : int  2646248 NA 59278 435573 NA 1854482 NA 5677251 1035791 NA ...
+##  $ X1940  : int  2832961 NA 72524 499261 NA 1949387 NA 6907387 1123296 NA ...
+##  $ X1950  : int  3061743 NA 128643 749587 NA 1909511 NA 10586224 1325089 NA ...
+##  $ X1960  : int  3266740 226167 NA 1302161 NA 1786272 NA 15717204 1753947 NA ...
+##  $ X1970  : int  3444165 300382 NA 1770900 NA 1923295 NA 19953134 2207259 NA ...
+##  $ X1980  : int  3893888 401851 NA 2718215 NA 2286435 NA 23667902 2889964 NA ...
+##  $ X1990  : int  4040587 550043 NA 3665228 NA 2350725 NA 29760021 3294394 NA ...
+##  $ X2000  : int  4447100 626932 NA 5130632 NA 2673400 NA 33871648 4301261 NA ...
+##  $ X2010  : int  4779736 710231 NA 6392017 NA 2915918 NA 37253956 5029196 NA ...
+##  $ X2020  : int  5024279 733391 NA 7151502 NA 3011524 NA 39538223 5773714 NA ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{min}\NormalTok{(statepopulations}\SpecialCharTok{$}\NormalTok{STATENH)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{26}
+\tightlist
+\item
+  What did you learn about the dataset? What can you tell me about it?
+  \textgreater{} The statepopulations dataset contains 84 observations
+  of 28 variables. Some of the variables (columns) include GISJOIN,
+  STATE, STATEFP, and STATENH. While the first two variables are stored
+  in characters, the others are numeric values (integers). The minimum
+  value of STATENH in this dataset is 10.
+\end{enumerate}
+
+CONGRATS! You've completed your first worksheet for Digital Methods II.
+That wasn't so bad, right? \textgreater{} I genuinely enjoyed it!
+
+\end{document}

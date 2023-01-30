@@ -1,8 +1,10 @@
 ---
 title: 'Worksheet 1: R Basics'
-author: "Amanda Regan"
-date: "2022-12-14"
+author: "Lucas Avelar"
+date: "2023-01-30"
 output:
+  html_document:
+    df_print: paged
   pdf_document: default
 ---
 _This is the first in a series of worksheets for History 8510 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document._
@@ -30,8 +32,17 @@ Numbers can be used to do arithmetic.
 
 (@) You try, multiple two numbers. 
 
+```{r}
+2 * 10
+```
 
 (@) Can you multiply two numbers and then divide by the result? 
+```{r}
+2 * 10
+```
+```{r}
+20 / 2
+```
 
 The next type of value is a string. Strings are lines of text. Sometimes these are referred to as character vectors. To create a string, you add text between two quotation marks. For example: 
 ```{r}
@@ -40,7 +51,7 @@ The next type of value is a string. Strings are lines of text. Sometimes these a
 
 (@) Try to create your own string. 
 ```{r}
-
+"Go Luc! Learning R is fun."
 ```
 
 You can't add strings using `+` like you can numbers. But there is a function called `paste()` which concatenates character vectors into one. This function is _very_ useful and one you'll use a lot in a variety of circumstances. Here's what that looks like: 
@@ -50,12 +61,12 @@ paste("Hello", "Clemson Graduate Students")
 ```
 (@) Try it, add two strings together like the above example. 
 ```{r}
-
+paste("Mondays", "can be dreadful")
 ```
 
 (@) Can you explain what happened in 2-3 sentences? 
 
->
+> The paste function put together two different strings into one. Since "Mondays" and "can be dreadful" count as two strings in quotations, paste reads both as two character vectors.
 
 
 The last type are logical values like `TRUE` and `FALSE`. (Note that these are all caps.)
@@ -82,13 +93,16 @@ These logical values are really useful for testing a statement and comparing val
 ```
 (@) Explain, what does the code on each line above do? 
 
->
+> the first line says that 5 is equal to 10, so the output is FALSE. the second code line says 3 is less than 4 so the output is TRUE. the third like says that 3 is either equal to 4 or equal to 3, so the output is TRUE.
 
 (@) Create your own comparison. 
 ```{r}
+10 == 40
+40 < 45
 
+100 == 1 | 2
 ```
-
+> I don't understand why the third line in the code above runs an output of TRUE... I was hoping for an output of FALSE.
 ---
 
 Values are great but they are made so much more powerful when combined with **Variables** which are a crucial building block of any programming language. Simply put, a variable stores a value. For example if I want x to equal 5 I can do that like this: 
@@ -120,13 +134,13 @@ Whatever you prefer, be consistent and your future self will thank you when your
 (@) You try, create a variable and assign it a number: 
 
 ```{r}
-
+MyFirstVariable <- 10
 ```
 
 (@) Can you assign a string to a variable?
 
 ```{r}
-
+MyNameInAVariable <- "Luc"
 ```
 
 (@) Once we've assigned a variable we can use that variable to run calculations just like we did with raw numbers.
@@ -148,22 +162,32 @@ My.Calculation <- (x + x)*10
 
 (@) You try. Assign a number to x and a number to y. Add those two numbers together.
 ```{r}
+x <- 5
+y <- 10
 
+y + x
 ```
 
 (@) Can you take `x` and `y` and multiply the result by 5? 
 ```{r}
-
+(x + y)*5
 ```
 
 (@) Try creating two variables with names other than `x ` and `y`. Descriptive names tend to be more useful. Can you multiply the contents of your variables? 
 ```{r}
+Spring <- 8510
+Fall <- 8500
 
+Spring * Fall
 ```
 
 (@) Try creating two variables that store strings. Can you concatenate those two variables together? 
 ```{r}
+a <- "Mondays"
+b <- "Can also be fun"
 
+paste("a", "b")
+paste(a, b)
 ```
 
 
@@ -197,7 +221,7 @@ my.numbers * 2
 ```
 (@) Explain in a few sentences, what happened in the code above?
 
->
+>the funcion c() was used to create a vector with 4 items. when multiplying the variable my.numbers per 2, the code runs an output with the results of each item of the variable (2, 4, 6, and 8). 
 
 Lets try something slightly different. 
 ```{r}
@@ -205,11 +229,11 @@ my.numbers[3] * 2
 ```
 (@) Explain in a few sentences, what happened in the code above? 
 
->
+> the function (is it also called a function in this case?) my.numbers[3] * 2 took the third item of the variable my.numbers (6) and multiplied it per 2.
 
 (@) You try, create a list of five items and store it in a descriptive variable. 
 ```{r}
-
+groceries.list <- c("avocado", "bell peppers", "lemonade", "ground beef", "tortillas")
 ```
 
 
@@ -239,13 +263,14 @@ We can ask R to pull up the documentation like this:
 
 (@) Now you try, find the documentation for the function  `signif()`.
 ```{r}
-
+?signif()
 ```
 
 In real life, you typically you wouldn't want to store this code in your script file. You probably don't need to pull up the documentation for the function every time you run that piece of code. But for the purposes of this worksheet we're adding it to our `.Rmd` document. 
 
 (@) Use the console to find the documentation for `floor()`? Try it and then tell me, what does that function do? 
 <
+> the 'floor()' function takes a single numeric argument x and returns a numeric vector that contains the largest integers not greater than the elements of x.
 
 ### Data Frames & Packages
 
@@ -279,7 +304,7 @@ Run `help(package="DigitalMethodsData")` in your console to pull up a list of da
 
 For demonstration purposes we'll use the `gayguides` data here. Pull up the help documentation for this package. What is the scope of this dataset? 
 
-<
+> The gayguides dataset contains information transcriped from Bob Damron's Address Books from 1965 through 1985 and it was last updated December 2022.
 
 To use a dataset included in this package we first need to load it. We can do so like this:
 
@@ -297,16 +322,22 @@ That gives us the first 6 rows of data. Its really useful if you just want to pe
 
 (@) The default is to print six rows of data. Can you modify the above code to print out the first 10 rows? 
 ```{r}
-
+head(gayguides, rows=10)
+```
+```{r}
+head(gayguides, row=10)
+```
+```{r}
+head(gayguides, 10)
 ```
 
 (@) Can you find the last 6 rows of data? 
 ```{r}
-
+tail(gayguides, 6)
 ```
 
 (@) Reflect on the previous two prompts. How did you figure these out? 
-< 
+> I Googled it (lmao). I searched "how to see 10 rows of a dataset in R" and it showed me the functions 'head()' and 'tail()'. It also taught me a different way that would be 'gayguides[1:10]' for an output of the first 10 rows.
 
 The `str()` function is another very useful function for understanding a dataset. It compactly displays the internal structure of an R object. 
 ```{r}
@@ -323,22 +354,37 @@ While that's useful, this particular dataset happens to be sorted by title. So t
 gayguides$title[500]
 ```
 (@) Break this down. Whats going on here? What do each of the elements of this code mean? (gayguides, $, title, and [500]) 
-<
+> in this function, we are pulling the 500th item of the title column (variable) in the gayguides dataset. The '$' operator pulls one particular segment of the data, so this is helpful if we need to pull up a specific value out of the whole dataset.
 
 (@) The Year variable contains the year (numeric) of each entry. Can you find the earliest year in this dataset? (Using code, don't cheat and use the documentation!)
+```{r}
+min(gayguides$Year)
+```
 
 (@) How about the latest year? 
+```{r}
+max(gayguides$Year)
+```
 
 
 (@) Add another dataset from `DigitalMethodsData`. How many observations are included in this dataset? Run through some of the examples from above to learn about the dataset.
 ```{r}
+data("statepopulations")
+```
 
+```{r}
+head(statepopulations, 10)
+```
+```{r}
+str(statepopulations)
+min(statepopulations$STATENH)
 ```
 
 (@) What did you learn about the dataset? What can you tell me about it? 
-<
+> The statepopulations dataset contains 84 observations of 28 variables. Some of the variables (columns) include GISJOIN, STATE, STATEFP, and STATENH. While the first two variables are stored in characters, the others are numeric values (integers). The minimum value of STATENH in this dataset is 10.
 
 
 
 
 CONGRATS! You've completed your first worksheet for Digital Methods II. That wasn't so bad, right? 
+> I genuinely enjoyed it!
