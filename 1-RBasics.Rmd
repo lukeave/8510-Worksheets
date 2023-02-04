@@ -354,6 +354,7 @@ While that's useful, this particular dataset happens to be sorted by title. So t
 gayguides$title[500]
 ```
 (@) Break this down. Whats going on here? What do each of the elements of this code mean? (gayguides, $, title, and [500]) 
+
 > in this function, we are pulling the 500th item of the title column (variable) in the gayguides dataset. The '$' operator pulls one particular segment of the data, so this is helpful if we need to pull up a specific value out of the whole dataset.
 
 (@) The Year variable contains the year (numeric) of each entry. Can you find the earliest year in this dataset? (Using code, don't cheat and use the documentation!)

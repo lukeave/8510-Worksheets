@@ -2074,16 +2074,19 @@ list? Well, we can pull that up like this:</p>
 <pre class="r"><code>gayguides$title[500]</code></pre>
 <pre><code>## [1] &quot;&#39;Rest Stop&#39;&quot;</code></pre>
 <ol start="23" class="example" style="list-style-type: decimal">
-<li><p>Break this down. Whats going on here? What do each of the
-elements of this code mean? (gayguides, <span class="math inline">\(,
-title, and [500]) &gt; in this function, we are pulling the 500th item
-of the title column (variable) in the gayguides dataset. The
-&#39;\)</span>’ operator pulls one particular segment of the data, so
-this is helpful if we need to pull up a specific value out of the whole
-dataset.</p></li>
-<li><p>The Year variable contains the year (numeric) of each entry. Can
-you find the earliest year in this dataset? (Using code, don’t cheat and
-use the documentation!)</p></li>
+<li>Break this down. Whats going on here? What do each of the elements
+of this code mean? (gayguides, $, title, and [500])</li>
+</ol>
+<blockquote>
+<p>in this function, we are pulling the 500th item of the title column
+(variable) in the gayguides dataset. The ‘$’ operator pulls one
+particular segment of the data, so this is helpful if we need to pull up
+a specific value out of the whole dataset.</p>
+</blockquote>
+<ol start="24" class="example" style="list-style-type: decimal">
+<li>The Year variable contains the year (numeric) of each entry. Can you
+find the earliest year in this dataset? (Using code, don’t cheat and use
+the documentation!)</li>
 </ol>
 <pre class="r"><code>min(gayguides$Year)</code></pre>
 <pre><code>## [1] 1965</code></pre>
