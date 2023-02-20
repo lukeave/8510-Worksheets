@@ -1,6 +1,6 @@
 ---
 title: 'Worksheet 3: Data Manipulation'
-author: "your name here"
+author: "Lucas Avelar"
 date: "2023-02-14"
 output:
   html_document:
@@ -40,16 +40,19 @@ Notice that this subsetted the data and returned only the title and year. Howeve
 
 (@) Use `select()` to take the city and state from gayguides and add them to a dataframe called "locations". 
 ```{r}
-
+locations <- gayguides %>%
+  select(city, state) %>%
+  data.frame()
 ```
 
 (@) What did you do to save the data to a new data frame? Why? 
 
->
+> I assigned a new variable named "locations" to the result of the functions select() and data.frame(). Because if not, the result would not be saved into the Environment. The data.frame function created a new dataframe for the resulting selection of the seelct function.
 
 (@) Can you use `select()` to grab all the columns of `gayguides` EXCEPT for the city and state? Hint: You might want to read the documentation for this function. 
 ```{r}
-
+gayguides %>%
+  select (!city & !state)
 ```
 
 ### Filter
@@ -73,30 +76,39 @@ gayguides %>%
 (@) The above code grabs every location where the city is Greenville. However, there is more than one city named Greenville. Can you filter to retrieve Greenville, SC? 
 
 ```{r}
-
+gayguides %>%
+  filter(city == 'Greenville' & state== 'SC')
 ```
 
 (@) How about every location between 1975 and 1980? 
 
 ```{r}
-
+gayguides %>%
+  filter(Year > 1975 & Year < 1980)
 ```
 
 
 (@) Every city in Greenville, SC between 1975 and 1980? 
 
-```{r}
+> (did you mean every "entry"?) 
 
+```{r}
+gayguides %>%
+  filter(city == 'Greenville' & state == 'SC') %>%
+  filter(Year > 1975 & Year < 1980)
 ```
 
 (@) Can you find all locations in 1975 except for New York and San Francisco? 
 ```{r}
-
+test.1975NOTnycsf <- gayguides %>%
+  filter(Year == 1975 & city != 'New York') %>%
+  filter (city != 'San Francisco')
 ```
 
 (@) The amenity features column in gay guides contains a comma separated list of categorizations. (G), for example, stands for girls. However, this language changed over time and women's locations eventually are described as (L). What if we want to filter by any entry that has (G) OR (L) in the amenity feature column?  This is a bit more complicated because the entries are a comma separated list and (G) or (L) is often paired with other categorizations. How might you _search the dataframe for entries that match_ (G) or (L)?
 ```{r}
-
+filter(gayguides, grepl('(G)', amenityfeatures))
+filter(gayguides, grepl('(L)', amenityfeatures))
 ```
 
 ### Mutate
