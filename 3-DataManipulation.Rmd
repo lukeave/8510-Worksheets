@@ -149,8 +149,11 @@ gayguides %>%
 
 (@) Using the `statepopulation` data, which state has the largest population in 1850? Write code that pulls only the relevant columns (state and 1850) and sorts it accordingly. 
 ```{r}
-
+statepopulations %>%
+  arrange(desc(X1850)) %>%
+  select(STATE, X1850)
 ```
+> The state of New York had the largest population in 1850.
 
 ### Group_by() and Summarize()
 
@@ -172,23 +175,41 @@ What happened here? In this example, we asked group_by to create groups based on
 
 (@) You try, use group_by and summarize to find the total number of locations in each state, each year.
 ```{r}
-
+gayguides %>%
+  select(state, Year) %>%
+  group_by(state, Year) %>%
+  summarize(count.locations = n())
+  
 ```
 
 (@) Summarize can do more than just count rows. Can you use `summarize()` to find the average age for each occupation in the Boston Women Voters data?
 ```{r}
-
+BostonWomenVoters %>%
+  select(Age, Occupation) %>%
+  group_by(Occupation) %>%
+  summarize(average.age = median(Age))
 ```
 
 (@) In the `gayguides` data, on average how many locations did each city in South Carolina have between 1970 and 1975?
 ```{r}
-
+gayguides %>%
+  select(city, state, Year) %>%
+    filter(state == 'SC' & Year > 1970 & Year < 1975) %>%
+  group_by(city, Year) %>%
+  summarise (count = n()) %>%
+  summarise(average.locations = median(count))
 ```
+> I think this isn't right. The median for Charleston, for example, should be 4.5. And for Myrtle Beach should be 1.75. I think it is rounding up, but I'm not sure how to show the decimal values.
+
 
 (@) Filter the dataset for only the values in the southernstates list (created in the block below). Then tell me, how many locations were in all the southern states in 1975?
 ```{r}
 southernstates <- c("AL", "AR", "FL", "GA", "KY", "LA", "MD", "MS", "NC", "SC", "TN", "TX", "VI", "WV")
-
+gayguides %>%
+  select(state, Year) %>%
+  filter(Year == 1975 & state == southernstates) %>%
+  group_by(state) %>%
+  summarise(locations = n())
 ```
 
 ## Re-Shaping Data: Joins and Pivots
@@ -215,15 +236,46 @@ head(almshouse_admissions)
 (@) Below I've downloaded data about each of the census regions. Join this dataset with `gayguides`. Create a data frame that includes each of the regions and the total number of locations in 1980. How many locations appear in the Mountain region in 1980?
 ```{r}
 regions <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/censusregions.csv")
+gayguides_regions <- left_join(gayguides, regions, by=c("state"="State.Code")) 
+
+gayguides_regions %>%
+  select(title, Year, Division) %>%
+  filter(Year == 1980) %>%
+  group_by(Division) %>%
+  summarise(locations = n())
 ```
 
 (@) Explain what you did above. What variable did you join by and why? What results?
 
+> There are 285 locations in the Mountain region in 1980.First, I joined the state variable in gayguides with the State.Code variable in the regions dataset since they had the same values. I saved the output as a new dataframe called gayguides_regions. Then I passed it the filter function to show only the locations in 1980. With that, I grouped the result by Division (or region) and summarised the total of observations per region in 1980.
+There were NA values in the joined dataset because of inconsistencies in how the states were transcribed into the gayguides data, i.e., 'DC', 'D.C.', etc.
+
 (@)How much did LGTBQ life grow between 1970 and 1980? Can you create a data frame that computes the growth in the number of locations between 1970 and 1980 for every state? For every region? 
 ```{r}
+gayguides_stategrowth_1970.1980 <- gayguides_regions %>%
+  select(state, Year) %>%
+  filter (Year == 1970 | Year == 1980) %>%
+  group_by(state, Year) %>%
+  summarise (count = n())
 
+stategrowth.calculated <- gayguides_stategrowth_1970.1980 %>%
+  select(state, count) %>%
+  group_by(state) %>%
+  summarise(growth = max(count) - min(count))
+
+gayguides_regiongrowth_1970.1980 <- gayguides_regions %>%
+  select(Division, Year) %>%
+  filter (Year == 1970 | Year == 1980) %>%
+  group_by(Division, Year) %>%
+  summarise (count = n())
+
+regiongrowth.calculated <- gayguides_regiongrowth_1970.1980 %>%
+  select(Division, count) %>%
+  group_by(Division) %>%
+  summarise(growth = max(count) - min(count))
 ```
 
+> This last one was a RIDE.
 
 ### `pivot_longer()` and `pivot_wider()`: Converting Wide and Long Data
 
