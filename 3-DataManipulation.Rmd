@@ -292,11 +292,14 @@ sc.parks <- sc.parks %>%
 ```
 
 (@) What did this code do? 
->
+> It "transfered" the column headers to a new column called "year" and the values of the columns to a new column called "count". It also asked the program to preserve the columns between "city" and "type_of_worker".
 
 (@) Here's another wide data frame. Can you turn this from a wide to a narrow data frame? 
 ```{r}
 rec.spaces <- read.csv("https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/PlayAreabyType.csv")
+
+rec.spaces <- rec.spaces %>%
+  pivot_longer(!type, names_to = "year", values_to = "count")
 ```
 
 The opposite of `pivot_longer()` is `pivot_wider()`. It "widens" data by increasing the number of columns and decreasing the number of rows. We can revert `sc.parks` back to a wide dataset using this function.
@@ -307,12 +310,14 @@ sc.parks %>%
 
 (@) Widen the `sc.parks` dataset so that the column names are drawn from the type of recreation worker.
 ```{r}
-
+sc.parks <- sc.parks %>%
+  pivot_wider(names_from = type_of_worker, values_from = count)
 ```
 
 (@) Turn `rec.spaces` into a wide dataframe. 
 ```{r}
-
+rec.spaces <- rec.spaces %>%
+  pivot_wider(names_from = type, values_from = count)
 ```
 
 
@@ -328,25 +333,46 @@ The implicit question was, "How many locations appear in each year?". The `judge
 
 (@) First, tell me, what is the question you are asking? 
 ```{r}
-
+data("judges")
 ```
+> How many nonwhite individuals occupied the seat of judge across the board? 
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
 ```{r}
-
+judges.nonwhite <- judges %>%
+  select(Last.Name, Gender, Race.or.Ethnicity, ABA.Rating..1., ABA.Rating..2., ABA.Rating..3., ABA.Rating..4., ABA.Rating..5., ABA.Rating..6.) %>%
+  filter(Race.or.Ethnicity != 'White') %>%
+  group_by(Gender, Race.or.Ethnicity) %>%
+  summarise(count = n())
+#I've tried different things before reaching this final piece of code. But the judges dataset is so messy that I could barely ask any questions associated with time. There were also limited results when filtering by ethnicity or gender (not surprisingly). So I've decided to filter out every 'White' judge and then just group the filtered results by gender and race.
+judges.nonwhite <- judges.nonwhite %>%
+  pivot_wider(names_from = Race.or.Ethnicity, values_from = count)
+# Now I've decided to pass it the function pivot_wider() to create a column for each ethnicity and leaving genders male and female as the only two observations. This makes it easier to answer the question of how many nonwhite individuals occupied the title of judge, but also expands the possible question to "how many of them were men and how many were female? And how were they classified in regard to race and ethnicity?"
 ```
 
 (@) Now ask a question of the `gayguides` data (or another dataset of your choice). What is the question you are asking? 
-```{r}
 
-```
+> How many locations in 1975 were NOT classified as bars or clubs? How many of those were classified as Religious Institutions? And in which region of the country were religious institutions more concentrated?
 
 (@) Now write some code to address that question. Comment the code with notes that explain your thinking as you go. Use functions like select(), filter(), etc to pair down your dataset and reshape it to address your question. 
 ```{r}
-
+#first I'll subset the gayguides_regions dataset to get all the locations not classified as bars or clubs  in 1975.
+gayguides.NOT.bars <- gayguides_regions %>%
+  select(title, Year, type, Region) %>%
+  filter(Year == 1975) %>%
+  filter(type != 'Bars/Clubs')
+#now I'll subset the gayguides.NOT.bars dataset to get all of the locations classified as religious.
+gayguides.religious <- gayguides.NOT.bars %>%
+  filter(grepl('Religious', type))
+#lastly, I'll group the data by region and summarise the number of locations for each region.
+gayguides.religious %>%
+  group_by(Region) %>%
+  summarise(locations = n())
 ```
 
 (@) Write a function that filters the gay guides dataset. It should accept 2 arguments: year and state. When passed to the function the function should return only the title, type, state and year for each entry. 
 ```{r}
-
+gayguides %>%
+  select(title, type, state, Year) %>%
+  filter(Year == 1978 & state == 'CA')
 ```
