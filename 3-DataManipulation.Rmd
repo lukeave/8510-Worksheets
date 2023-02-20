@@ -110,6 +110,7 @@ test.1975NOTnycsf <- gayguides %>%
 filter(gayguides, grepl('(G)', amenityfeatures))
 filter(gayguides, grepl('(L)', amenityfeatures))
 ```
+> I could only figure out how to use grepl() to get two different dataframes, one for (G) and other for (L). I couldn't get both results in one single dataframe.
 
 ### Mutate
 The `mutate()` function adds new variables and preserves existing one. This is useful when you want to create a new column based on other values. For example, in the `statepopulation` dataset, we want to ask "How much did the population increase between 1800 and 1900 in each state?." We can do that by subtracting the population in 1900 from 1800 and storing that value in a new column. 
@@ -121,13 +122,17 @@ statepopulations %>% mutate(difference = X1900 - X1800)
 
 (@) In the Boston Women Voters dataset, every voter is given an age. Can you use their age to calculate each person's birth year? (Assume all this data was collected in 1920.)
 ```{r}
+data("BostonWomenVoters")
+BostonWomenVoters %>%
+  mutate(birth.year = 1920 - Age)
 
 ```
 
 (@) Can you create a new column that combines the city and state columns in `gayguides` into a new column called location? It should list the city, state. (i.e. San Diego, CA)
 
 ```{r}
-
+gayguides %>%
+  mutate(location = paste(city, state, sep = ", "))
 ```
 
 ### Arrange
