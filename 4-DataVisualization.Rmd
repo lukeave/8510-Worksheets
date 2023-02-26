@@ -113,7 +113,7 @@ ggplot(data = BostonWomenVoters, aes(x = Age)) +
 
 (@) Explain, what does changing the number of bins do? 
 
-> changing the number of bins alters the way the data is divided for visualization. the more bins, the more "bars" we have in the histogram for each age,enlarging the x axis and shrinking the y axis.
+> changing the number of bins alters the way the data is divided for visualization. the more bins, the more data we have in the histogram for each age, enlarging the x axis and shrinking the y axis.
 
 ### Barplots 
 
@@ -127,18 +127,30 @@ ggplot(sc.rec, aes(x = state, y = state.expenditures )) +
 
 (@) Using the `gayguides` data, create a bar chart that shows the number of locations in 1980 in South Carolina, Georgia, and North Carolina. 
 ```{r}
+gayg.sc.ga.nc <- gayguides %>% filter(state == 'SC' | state == 'GA' | state == 'NC') %>% group_by(state) %>% summarize(number.locations = n())
+ggplot(data = gayg.sc.ga.nc, aes(x = state, y = number.locations)) +
+  geom_col()
 ```
 
 (@) Using the `gayguides` data, plot the number of religious institutions in each state.
 ```{r}
+gay.religious.states <- gayguides %>% filter(grepl('Religious', type)) %>%
+  group_by(state) %>% summarise(number.relig.inst = n())
+ggplot(data = gay.religious.states, aes(x = state, y = number.relig.inst)) +
+  geom_col(width = 0.3) + labs(x = 'State', y = 'Religious Institutions', title = 'Number of Religious Institutions in Each State')
 ```
 
 (@) Formulate a question based on a dataset of your choice. That question should be something that would be appropriately answered by a bar chart. What is the question you want to explore?
 
-<
+> In the GayGuides data, how many Hotels were in NY, PA, SC, and CA in 1980?
 
 (@) Now write the code to answer that question and use comments (`#`) to explain your thinking as you go.
 ```{r}
+gay.ny.pa.sc.ca.1980 <- gayguides %>% filter(state == 'CA' | state == 'NY' | state == 'PA' | state == 'SC' ) %>%
+  filter(grepl('Hotel', type) & Year == 1980) %>%
+  group_by(state) %>% summarise(total.hotels = n())
+ggplot(data = gay.ny.pa.sc.ca.1980, aes(x = state, y = total.hotels)) +
+  geom_col(width = 0.5) + labs(x = 'State', y = 'Number of Hotels', title = 'Number of Hotels per State in 1980')
 ```
 
 ### Line Charts
