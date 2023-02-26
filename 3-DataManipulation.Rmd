@@ -107,8 +107,7 @@ test.1975NOTnycsf <- gayguides %>%
 
 (@) The amenity features column in gay guides contains a comma separated list of categorizations. (G), for example, stands for girls. However, this language changed over time and women's locations eventually are described as (L). What if we want to filter by any entry that has (G) OR (L) in the amenity feature column?  This is a bit more complicated because the entries are a comma separated list and (G) or (L) is often paired with other categorizations. How might you _search the dataframe for entries that match_ (G) or (L)?
 ```{r}
-filter(gayguides, grepl('(G)', amenityfeatures))
-filter(gayguides, grepl('(L)', amenityfeatures))
+luc <- filter(gayguides, grepl('(G)', amenityfeatures) | grepl('(L)', amenityfeatures))
 ```
 > I could only figure out how to use grepl() to get two different dataframes, one for (G) and other for (L). I couldn't get both results in one single dataframe.
 
