@@ -23,7 +23,7 @@ Any type of plot in R has 3 necessary layers.
 **3) Geometry:** The type or shape of the visual elements on the graph. For example, this could be a point in the case of a scatter plot, a bar in the case of a bar plot, or a line in the case of a line plot.
 
 Lets load all the libraries we'll use in this worksheet: 
-```{r message=FALSE, warning=FALSE}
+```{r}
 library(gapminder) #this is a dataset
 library(ggplot2) 
 library(tidyverse)
@@ -36,8 +36,9 @@ data(gapminder)
 
 (@) Take a look at the data. What can you say about it? 
 
-> 
-This data includes variables for life exptenency and per capita GDP. Lets say we want to plot these two variables against each other for all country-years within the dataset. First we have to tell `ggplot()` what our data is. 
+> The data has 1704 observations and 6 variables, which include country, continent, year, life expectancy, population, and per capita GDP. It is a long dataset instead of wide since the values in the first column (country) repeat. 
+
+This data includes variables for life expectancy and per capita GDP. Lets say we want to plot these two variables against each other for all country-years within the dataset. First we have to tell `ggplot()` what our data is. 
 ```{r}
 p <- ggplot(data = gapminder)
 ```
@@ -63,6 +64,7 @@ To summarize what we did above, there were 3 steps we went through. First, tell 
 
 (@) Modify the above plot so that the variables it draws on are life expectancy and population. Then, use a comment to annotate the code and mark each of the 3 parts described above.
 ```{r}
+ggplot(data = gapminder, mapping = aes(x = pop, y = lifeExp)) + geom_point()
 ```
 
 We can make this plot even more complex. Adding another value, color, to `aes()` we can change the color of each dot to correspond to a year. We also might want to rename the x and y-axis so that the labels have a more useful description of the variable. We can do so using the labs function. 
@@ -73,12 +75,14 @@ ggplot(data = gapminder, mapping = aes(x = gdpPercap, y=lifeExp, color=year)) + 
 
 (@) Using the same plot above, can you edit the code to add a trend line? (Hint: You'll need to add another geom)
 ```{r}
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y=lifeExp, color=year)) + geom_point() + geom_line() + labs(x="GDP Per Capita", y="Life Expectency in Years", title="Life Expectency and Per Capita GDP by Year") 
 ```
 
 
 (@) The file below contains data about the population of cities in 1930 and their recreation expenditures. Can you create a scatter plot from this data? 
 ```{r}
 rec <- read.csv(file = "https://raw.githubusercontent.com/regan008/DigitalMethodsData/main/raw/Recreation-Expenditures.csv")
+ggplot(data = rec, mapping = aes(x = total_expenditures, y = population, color = state)) +geom_point() + labs(x='Total Expenditure', y='Population', title='Total Expenditure pert Population Size per state in 1930')
 ```
 
 The `geom_point()` function allows us to create scatterplots but its not the only geom within `ggplot2()`.
@@ -95,15 +99,22 @@ ggplot(recreational.data, aes(x = population)) +
 
 (@) Use the Boston Women's voters dataset to create a histogram of the age of voters. 
 ```{r}
+data("BostonWomenVoters")
+ggplot(data = BostonWomenVoters, aes(x = Age)) +
+  geom_histogram()
 ```
 
 (@) By default, `geom_histogram()` is choosing the number of bins. Can you change the number of bins or the bin width? (Hint: How might you look up the options for this function?)
 ```{r}
+data("BostonWomenVoters")
+ggplot(data = BostonWomenVoters, aes(x = Age)) +
+  geom_histogram(bins = 50, binwidth = 0.5)
 ```
 
 (@) Explain, what does changing the number of bins do? 
 
-> 
+> changing the number of bins alters the way the data is divided for visualization. the more bins, the more "bars" we have in the histogram for each age,enlarging the x axis and shrinking the y axis.
+
 ### Barplots 
 
 A barplot (or barchart) is one of the most common types of graphic. Whereas a histogram shows the number of entries in each "bin" - a bar chart shows the relationship between a numeric and a categorical variable. Each entity in the categorical variable is represented as a bar. The size of the bar represents its numeric value. 
