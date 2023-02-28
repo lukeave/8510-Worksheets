@@ -172,6 +172,13 @@ ggplot(data = gg.relig, aes(x = Year, y = count)) +
 
 (@) In the gayguides data, danger or risk is indicated in several different ways. Sometimes it through the use of an amenity categorization of (HOT) or (AYOR) which meant that these locations were frequented by police and should be used at your own risk. Othertimes, locations were listed as "inquire locally" in either the description or address field. There are many reasons a location would have requested to have been listed this way. Many times, it was due to harassment and the location deemed it too dangerous to publically list its location. Can you create a subset of the gay guides data about risk and then use it to create a chart about the usage of these indicators over time? 
 ```{r}
+gg.risk <- gayguides %>% 
+  filter(grepl('locally', description) | grepl('AYOR', amenityfeatures) | grepl('HOT', amenityfeatures)) %>%
+  group_by(Year) %>%
+  summarise(count = n())
+
+ggplot(data = gg.risk, aes(x = Year, y = count)) +
+  geom_line() + labs(title = 'Risk factor in gay locations over the years', x = 'Year', y = 'risky locations')
 ```
 
 
@@ -186,26 +193,50 @@ ggplot(gg.byyear, aes(x = Year, y = count)) +
 
 (@) Using the state recreation data, can you create a chart that outlines the total expenditures in South Carolina by city?
 ```{r}
+rec.SC <- recreational.data %>% filter(state == 'SC') %>%
+  group_by(city)
+
+ggplot(data = rec.SC, aes(x = population, y = total_expenditures)) +
+  geom_col() + facet_wrap(~city)
 ```
 
 (@) Using the gayguides data can you select 5 types of locations and chart the number of each type between 1965 and 1980? 
 ```{r}
+gg.5.types <- gayguides %>% filter(type == 'Restaurant' | type == 'Religious Institution' | type == 'Baths' | type == 'Hotel' | type == 'Bars/Clubs') %>%
+  filter(Year < 1981) %>%
+  group_by(Year, type) %>%
+  summarise(count = n())
+
+ggplot(data = gg.5.types, aes(x = Year, y = count)) +
+  geom_col() + facet_wrap(~type)
 ```
 
 (@) Using this recreation dataset from last week, can you find the average number of volunteer and paid workers over time? 
 ```{r}
 rec.workers <- read.csv("https://github.com/regan008/DigitalMethodsData/blob/main/raw/RecreationData-Wide.csv")
 ```
-
+ > I don't know what's wrong with this dataset. It won't load.
+ 
 ### Practice
 In the slots below use the datasets for class (or a dataset of your choice) to create a plot. The plot you create in each of these three examples should try to make some kind of historical observation. After you finish creating the plot, write a short paragraph that explains what kind of observation you were trying to make and what your plot demonstrates. 
 
 (@) Plot 1
 ```{r}
+library(DigitalMethodsData)
+data("charlestonManumissions")
+
+manumission.motives <- charlestonManumissions %>% 
+  group_by(Race, Motive) %>%
+  summarize(count = n())
+
+ggplot(data = manumission.motives, aes(x=Motive, y=count)) +
+  geom_col() + labs(title = 'Motivation of Charleston Manumissions per Ethnicity or Race, 1776-1800', x = 'Motive', y = 'Manumissions') + facet_wrap(~Race)
 ```
 
 (@) Plot 1 explanation: 
->
+> Ideally, this dataset would have categorized the motivations under a controlled vocabulary system. Since it doesn't, quantifying the manumission motives becomes a much harder task since some categores countain more than one value, i.e., "Moral; financial". I know there is a way to clean up the dataset so it splits the categories that contain values separated by comma, but I can't remember how.
+In this first plot, I tried to show the numbers for each of the motives for manumissions in Charleston between 1776 and 1800. I wanted to show outputs for each Race as well, but I got stuck with the summarise() function that removed the 'Race' variable from the dataset. I tried to do mutate() instead, but the outcomes forwere wrong in numbers when doing so.
+
 (@) Plot 2
 ```{r}
 ```
