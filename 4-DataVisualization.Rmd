@@ -127,6 +127,8 @@ ggplot(sc.rec, aes(x = state, y = state.expenditures )) +
 
 (@) Using the `gayguides` data, create a bar chart that shows the number of locations in 1980 in South Carolina, Georgia, and North Carolina. 
 ```{r}
+library(DigitalMethodsData)
+data("gayguides")
 gayg.sc.ga.nc <- gayguides %>% filter(state == 'SC' | state == 'GA' | state == 'NC') %>% group_by(state) %>% summarize(number.locations = n())
 ggplot(data = gayg.sc.ga.nc, aes(x = state, y = number.locations)) +
   geom_col()

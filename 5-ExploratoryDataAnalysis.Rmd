@@ -1,0 +1,46 @@
+---
+title: "Exploratory Data Analysis"
+author: "Lucas Avelar"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+#load libraries
+library(DigitalMethodsData)
+library(tidyverse)
+library(ggplot2)
+#load data
+data("gayguides")
+```
+#Step 1 - Formulate the question
+> What types of location were documented in the U.S. Territories, i.e., Puerto Rico, Guam, and Virgin Islands between 1965 and 1980? How many of these locations were assigned an amenity feature of "AYOR", "HOT" or included "inquire locally" in the description or address fields?
+
+#Steps 2 and 3 - Read the data and Check the packaging
+```{r}
+#load libraries
+library(DigitalMethodsData)
+library(tidyverse)
+library(ggplot2)
+#load data and read it
+data("gayguides")
+
+#Check the packaging
+nrow(gayguides)
+ncol(gayguides)
+```
+#Step 4 - Run str()
+```{r}
+str(gayguides)
+```
+#Step 5 - Look at the top and the bottom of the data
+```{r}
+head(gayguides[, c(6:9)])
+tail(gayguides[, c(6:9)])
+```
+#Step 6 - Check your "n"s
+```{r}
+table(gayguides$Year)
+
+```
+
