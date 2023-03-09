@@ -41,6 +41,39 @@ tail(gayguides[, c(6:9)])
 #Step 6 - Check your "n"s
 ```{r}
 table(gayguides$Year)
-
 ```
+# this is helpful to check data integrity after reading it. As Peng suggests in his book, if you know the dataset should have records for all years between 1965 and 1985, this helps to make sure it really does and that the number of records per year does not seem off. For the purpose of this exercise, I find it reasonable to skip Step 7 "Validade with at least one external data source".
+
+#Step 8 - Try the easy solution first (provide prima facie evidence for the original question)
+```{r}
+#let's subset gayguides to what truly matters for the question
+gg.territories <- gayguides %>%
+  filter(state == 'GU' | state == 'PR' | state == 'VI')
+head(gg.territories)
+tail(gg.territories)
+```
+```{r}
+#let's group by type, state, and Year and get the count for every combination
+gg.terr.count <- gg.territories %>%
+  separate_rows(type, sep=",")%>%
+  group_by(type, state, Year) %>%
+  summarise(count = n())
+```
+#cool. so we're good. but what now?
+```{r}
+#let's first mutate "alter.gg.terr.types" to change the spelling of the mismatching values.
+gg.terr.count <- gg.terr.count %>%
+  mutate(type = fct_collapse(type,
+                             "Hotel Establishments" = c("Hotel", "Hotels"),
+                             "Cruisy Areas" = c("Cruising Areas", "Cruisy Areas")
+  )
+  )
+```
+#now I assume I can try to collapse observations with the same values by grouping by type again and summarising the count.
+```{r}
+gg.terr.count <- gg.terr.count %>%
+  group_by(type) %>%
+  summarise(count = sum(count)) 
+```
+#now what?`
 
