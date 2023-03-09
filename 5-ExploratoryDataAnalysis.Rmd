@@ -14,7 +14,7 @@ library(ggplot2)
 data("gayguides")
 ```
 #Step 1 - Formulate the question
-> What types of location were documented in the U.S. Territories, i.e., Puerto Rico, Guam, and Virgin Islands between 1965 and 1980? How many of these locations were assigned an amenity feature of "AYOR", "HOT" or included "inquire locally" in the description or address fields?
+> What types of location were documented in the U.S. Territories, i.e., Puerto Rico, Guam, and Virgin Islands between 1965 and 1980? Calculate if each type increased or decreased in numbers over time. Lastly, demonstrate the percentage of locations that were assigned an amenity feature of "AYOR", "HOT" or included "inquire locally" in the description or address fields.
 
 #Steps 2 and 3 - Read the data and Check the packaging
 ```{r}
@@ -46,7 +46,7 @@ table(gayguides$Year)
 
 #Step 8 - Try the easy solution first (provide prima facie evidence for the original question)
 ```{r}
-#let's subset gayguides to what truly matters for the question
+#let's subset gayguides to get to what truly matters for the question
 gg.territories <- gayguides %>%
   filter(state == 'GU' | state == 'PR' | state == 'VI')
 head(gg.territories)
@@ -54,26 +54,46 @@ tail(gg.territories)
 ```
 ```{r}
 #let's group by type, state, and Year and get the count for every combination
-gg.terr.count <- gg.territories %>%
+gg.terr.type.year <- gg.territories %>%
   separate_rows(type, sep=",")%>%
   group_by(type, state, Year) %>%
   summarise(count = n())
 ```
-#cool. so we're good. but what now?
+#cool. but what now?
 ```{r}
-#let's first mutate "alter.gg.terr.types" to change the spelling of the mismatching values.
-gg.terr.count <- gg.terr.count %>%
+#let's first mutate "gg.terr.type.year" to change the spelling of the mismatching values.
+gg.terr.type.year <- gg.terr.type.year %>%
   mutate(type = fct_collapse(type,
-                             "Hotel Establishments" = c("Hotel", "Hotels"),
+                             "Hotels" = c("Hotel", "Hotels"),
                              "Cruisy Areas" = c("Cruising Areas", "Cruisy Areas")
   )
   )
 ```
 #now I assume I can try to collapse observations with the same values by grouping by type again and summarising the count.
 ```{r}
-gg.terr.count <- gg.terr.count %>%
+gg.terr.type.count <- gg.terr.type.year %>%
   group_by(type) %>%
   summarise(count = sum(count)) 
 ```
-#now what?`
+#We can surely answer the first part of the question:
+> What types of location were documented in the U.S. Territories, i.e., Puerto Rico, Guam, and Virgin Islands between 1965 and 1980?
+R: Bars/Clubs, Baths, Cruisy Areas, Hotels, and Restaurants.
+
+#now how to answer the second part?
+> Calculate if each type increased or decreased in numbers over time.
+
+```{r}
+#use ggplot to create a plot that demonstrates the growth or decrease of each location type over time.
+#make a plot for each of the territories.
+#line chart, with years as x axis, count as y axis, and types for colors.
+#state as facet.
+ggplot(data = gg.terr.type.year, mapping = aes(x = Year, y = count, color = type)) + 
+  geom_line() + labs(x = "Year", y = "count", title = "Location Types over Time") + facet_wrap(~state)
+```
+#now to answer the last part of the question:
+>Lastly, demonstrate the percentage of locations that were assigned an amenity feature of "AYOR", "HOT" or included "inquire locally" in the description or address fields.
+
+```{r}
+gg.territories %>% filter(grepl('AYOR' | ))
+```
 
