@@ -371,7 +371,17 @@ gayguides.religious %>%
 
 (@) Write a function that filters the gay guides dataset. It should accept 2 arguments: year and state. When passed to the function the function should return only the title, type, state and year for each entry. 
 ```{r}
-gayguides %>%
+state.year <- function(x, y) {
+  data(gayguides)
+  result <- gayguides %>%
   select(title, type, state, Year) %>%
-  filter(Year == 1978 & state == 'CA')
+  filter(Year == x & state == y)
+  
+    return(result)
+}
+```
+
+> Download the MGG data repository from GitHub. Write a function that ingests a year of unclear data and renames one of the columns. It should write that CSV back to the file. 
+```{r}
+
 ```
