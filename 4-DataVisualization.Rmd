@@ -229,7 +229,8 @@ data("charlestonManumissions")
 
 manumission.motives <- charlestonManumissions %>% 
   group_by(Race, Motive) %>%
-  summarize(count = n())
+  summarize(count = n()) %>%
+  separate_rows(Motive, sep=';')
 
 ggplot(data = manumission.motives, aes(x=Motive, y=count)) +
   geom_col() + labs(title = 'Motivation of Charleston Manumissions per Ethnicity or Race, 1776-1800', x = 'Motive', y = 'Manumissions') + facet_wrap(~Race)
@@ -241,10 +242,27 @@ In this first plot, I tried to show the numbers for each of the motives for manu
 
 (@) Plot 2
 ```{r}
+data("statepopulations")
+
+southern.states <- c("Alabama", "Arkansas", "South Carolina", "North Carolina", "Virginia", "Mississippi", "Tennessee", "Texas")
+
+statepopulations <- rename(statepopulations, '1850' = "X1850", '1860' = 'X1860', '1870' = 'X1870', '1880' = 'X1880') 
+
+south.states <- statepopulations %>% 
+  filter(STATE %in% southern.states) %>% 
+  select(STATE, '1850', '1860', '1870', '1880') %>%
+  pivot_longer(!STATE, names_to = "year", values_to = "population") %>%
+  group_by(STATE, year, population)
+
+south.states$year <- as.numeric(south.states$year)
+
+ggplot(data=south.states, aes(x = year, y = population, color = STATE)) +
+  geom_line() + labs(x = "Year", y = "Population", title = "Population Growth in Southern States, 1850-1880")
 ```
 
 (@) Plot 2 explanation: 
 >
+
 (@) Plot 3. For this one, try a different kind of plot. [Check out a useful gallery here.](https://github.com/regan008/DigitalMethodsData/blob/main/raw/RecreationData-Wide.csv)
 (For this week, avoid choosing a map. We'll talk more about maps and geographic data over the next two weeks.)
 ```{r}
