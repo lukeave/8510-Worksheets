@@ -94,6 +94,9 @@ ggplot(data = gg.terr.type.year, mapping = aes(x = Year, y = count, color = type
 >Lastly, demonstrate the percentage of locations that were assigned an amenity feature of "AYOR", "HOT" or included "inquire locally" in the description or address fields.
 
 ```{r}
-gg.territories %>% filter(grepl('AYOR' | ))
+gg.terr.risk <- gg.territories %>% 
+  filter(grepl('AYOR', amenityfeatures) | grepl('HOT', amenityfeatures) | grepl('locally', description)) #%>%
+ ##group_by(type, amenityfeatures) %>%
+ ## mutate(percent_rank())
 ```
-
+#ok, I could literally just calculate how many % of 547 is 16 entries. But I want to visualize that in a plot. I wanted to use mutate() and percent_rank().
