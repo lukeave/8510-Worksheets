@@ -251,17 +251,16 @@ statepopulations <- rename(statepopulations, '1850' = "X1850", '1860' = 'X1860',
 south.states <- statepopulations %>% 
   filter(STATE %in% southern.states) %>% 
   select(STATE, '1850', '1860', '1870', '1880') %>%
-  pivot_longer(!STATE, names_to = "year", values_to = "population") %>%
-  group_by(STATE, year, population)
+  pivot_longer(!STATE, names_to = "year", values_to = "population")
 
 south.states$year <- as.numeric(south.states$year)
 
 ggplot(data=south.states, aes(x = year, y = population, color = STATE)) +
-  geom_line() + labs(x = "Year", y = "Population", title = "Population Growth in Southern States, 1850-1880")
+  geom_line() + geom_point() + labs(x = "Year", y = "Population", title = "Population Growth in Southern States, 1850-1880")
 ```
 
 (@) Plot 2 explanation: 
->
+> I wanted to see if there was a gap in population growth between the years of 1860 and 1870 in southern states as a potential correlation with the Civil War. I first created a new character vector that listed all the southern states. Then I had to rename the columns I needed to use to remove the 'X' that followed the years. I subsetted the data frame, used the character vector to filter the statepopulations data frame and remove states from the North. Then also filtered to only the years that I wanted. I then used pivot_longer() to alter the data frame structure and have a column for each variable to be presented in the plot: state, year, and population. Because the year column had a class of character, I changed it to numeric. Then I created a line chart to see if my historical observation was right, and indeed, population growth gets slightly slower between 1860 and 1870.
 
 (@) Plot 3. For this one, try a different kind of plot. [Check out a useful gallery here.](https://github.com/regan008/DigitalMethodsData/blob/main/raw/RecreationData-Wide.csv)
 (For this week, avoid choosing a map. We'll talk more about maps and geographic data over the next two weeks.)
