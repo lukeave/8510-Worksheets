@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 5: Mapping'
-author: ''
-date: ''
+author: 'Lucas Avelar'
+date: 'March16, 2023'
 ---
 
 _This is the fifth in a series of worksheets for History 8510 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), knit your document, and upload it to canvas. Don't forget to commit your changes as you go and push to github when you finish the worksheet._
@@ -37,16 +37,29 @@ Now we have latitude and longitude coordinates for our data.
 
 (@) Use this approach to geocode the `UndergroundRR` data. 
 ```{r}
+data("UndergroundRR")
+
+undergroundRR.coord <- undergroundRR %>%
+  geocode(city = City, state = State, method='osm', lat = latitude, long = longitude)
 ```
 
 
 (@) Geocode the Boston Women Voters dataset. Note that the data does include street addresses but because they are broken into parts - street address number, street, etc - you'll need to combine them into a full address to pass to the geocoding function. 
 ```{r}
 data("BostonWomenVoters")
+BostonWomenVoters$street.address <- paste(BostonWomenVoters$Street.Number.on.April.1,  BostonWomenVoters$Street.of.Residence.on.April.1)
+
+BostonWomenVoters$full.address <-
+  paste(BostonWomenVoters$street.address, BostonWomenVoters$Town.of.Birth, BostonWomenVoters$State.or.Province.of.Birth, sep=', ')
+
+BostonWomen.subset <- BostonWomenVoters[1:300,]
+
+geocode(BostonWomen.subset, address = full.address, method='osm', lat = latitude, long = longitude)
 ```
 
 (@) As mentioned above - there are many ways to make a map in R. The `ggmap()` package has a function called `qmplot()` which allows for the quick plotting of maps with data. Look up the documentation for this package and use it to create a plot of the recreational data that we gecode above.
 ```{r}
+qmplot(longitude, latitude, data = rec.data.coordinates)
 ```
 
 ### Maps with `ggplot()`
