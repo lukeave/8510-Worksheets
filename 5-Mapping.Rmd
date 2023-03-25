@@ -54,7 +54,7 @@ BostonWomenVoters$full.address <-
 
 BostonWomen.subset <- BostonWomenVoters[1:300,]
 
-geocode(BostonWomen.subset, address = full.address, method='osm', lat = latitude, long = longitude)
+BostonWomen.subset <- geocode(BostonWomen.subset, address = full.address, method='osm', lat = latitude, long = longitude)
 ```
 
 (@) As mentioned above - there are many ways to make a map in R. The `ggmap()` package has a function called `qmplot()` which allows for the quick plotting of maps with data. Look up the documentation for this package and use it to create a plot of the recreational data that we gecode above.
@@ -70,7 +70,8 @@ First we need to get a basemap. For this example we'll use the `map_data()` func
 
 (@) Look at the documentation for `map_data()`. Which geographies does this package provide access to?
 
->
+> it provides access to maps of the US, France, Italy, New Zeland, the world, etc.
+
 Lets load the base map data for the US. 
 ```{r}
 usa <- map_data("state")
@@ -78,18 +79,18 @@ usa <- map_data("state")
 
 (@) `map_data()` generates a data frame. Take a look at this data frame, what types of data are included? 
 
-> 
+> it includes the latitude and longitude of each region (state), subregions, and two more variables named "group" and "order".
 
 We can now pass this data to ggplot to create a simple basemap. When we wanted to create a bar plot using `ggplot()` we called `geom_bar`. When we wanted to create a line chart we used `geom_point()` and `geom_line()`. The sample principle applies here and `ggplot()` provides a geom for maps.
 ```{r}
-ggplot() + 
-  geom_map( data = usa, map = usa, aes(long, lat, map_id=region))
+ggplot(usa, aes(map_id = region)) + 
+  geom_map(aes(long, lat, map_id= region), map = usa)
 ```
 
 Now we have a basemap! But what if we want to layer data onto it. Lets add all of the locations in `gayguides` from 1965. First we need to set up our data: 
 ```{r}
 data(gayguides)
-gayguides <- gayguides %>% filter(Year == 1965)
+gayguides.65 <- gayguides %>% filter(Year == 1965)
 ```
 
 And then we can use the same mapping code from above but this time we're going to add an additional geom -- `geom_point()` which will point to each of our locations from 1965. 
@@ -101,15 +102,36 @@ ggplot() +
 
 (@) This map looks slightly funny, but that is because the data includes entries outside of the contiguous United States. Try filtering out those entries and mapping this again. Can you change the color or size of the points? Can you add a title?
 ```{r}
+gayguides <- gayguides %>%
+  filter(gayguides$state != 'VI' & gayguides$state != 'PR' & gayguides$state != 'GU' & gayguides$state != 'HI')
+
+ggplot() + 
+  geom_map( data = usa, map = usa, aes(long, lat, map_id=region)) +
+  geom_point(data = gayguides, mapping = aes(x=lon, y=lat, col = type)) + labs(title = "Gay locations in 1965 in the Contiguous United States")
+                                                                
 ```
+> Something is off with the usa map. It gives me the warning "Ignoring unknown aesthetics: x and y" and doesn't seem to recognize the states. also let's just pretend the location types are all separated and tidy for the sake of this exercise (lol). 
 
 (@) Can you map just locations in South Carolina (on a basemap of SC)? 
 ```{r}
+state.sc <- map_data('state', region = "south carolina")
+gayguides.sc.85 <- gayguides %>%
+  filter(state == 'SC' & Year == 1985)
+ggplot() + 
+  geom_map(data = state.sc, map = state.sc, aes(x=long, y=lat, map_id=region), fill = "pink", linewidth = 1, colour = "black") +
+    geom_point(data = gayguides.sc.85, aes(x=lon, y=lat), colour = "blue")
 ```
+> again, the warning that the function is ignoring unknown aesthetics x and y persists. the problem is in the geom_map() function, not in the geom_point().
 
 (@) Create a map that uses your geocoded data from the Boston Women Voters dataset. 
 ```{r}
+us.states <- map_data("state")
+
+ggplot() +
+  geom_map(data = us.states, map = us.states, aes(x = long, y = lat, map_id=region), fill = "pink", linewidth=1) +
+  geom_point(data = BostonWomen.subset, aes(x=longitude, y=latitude), fill = "blue")
 ```
+> I wanted to have a map that focused on the east coast and the southeast of the US. But I had a hard time filtering the us.states data to make the map look this way.
 
 Lets return to the recreational data for a minute.
 
@@ -130,6 +152,7 @@ ggplot() +
   geom_map( data = usa, map = usa, aes(long, lat, map_id=region), fill="white", color="gray") +
   geom_point(data = rec.data.coordinates, mapping = aes(x=longitude, y=latitude, size=total_expenditures))
 ```
+> Ah, ok. I see now what happened to the previous maps.
 
 ```{r}
 library(readr) #you may have to install it using `install.packages()`. 
@@ -159,15 +182,19 @@ ggplot(data = nhgis, aes(fill = AZF001)) +
   geom_sf() 
 ```
 (@) In the code above, why filter out Hawaii and Alaska? Try uncommenting that line and rerunning the code. What happens? Why might we want to do this? Why might we not want to do this? How does it shape the interpretation?
->
+> I had a hard time answering this one...
+
 This is a great start. But using AZF001 (Native born males) as the fill does not create a useful visualization. It doesn't give us a sense of the proportion of that data. What would be much better, is if we knew what percentage of the total population foreign born males represented. To get that we have to calculate it. The next few questions will walk build on the code above and walk you through doing this.
 
 (@) First, create a variable called total_male_pop, with the total foreign and native born male population by summing the variables AZF001 and AZF003. 
 ```{r}
+nhgis <- nhgis %>%
+  mutate(total_male_pop = AZF001 + AZF003)
 ```
 
 (@) Now, use the total_male_pop variable and create a variable for the the percentage of foreign born males.
 ```{r}
+nhgis$percentage.foreign.male <- c(nhgis$AZF003 / nhgis$total_male_pop) * 100 
 ```
 
 (@) Now map your result. You'll want to replicate the code from the example above, but this time add another layer to the plot - a scale. Here we'll use this scale `scale_fill_continuous("", labels = scales::percent)`
