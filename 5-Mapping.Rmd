@@ -179,7 +179,7 @@ nhgis <- read_nhgis_sf(
 nhgis <- nhgis %>% filter(STATENAM != "Alaska Territory" & STATENAM != "Hawaii Territory")
 #plot 
 ggplot(data = nhgis, aes(fill = AZF001)) +
-  geom_sf() 
+  geom_sf()
 ```
 (@) In the code above, why filter out Hawaii and Alaska? Try uncommenting that line and rerunning the code. What happens? Why might we want to do this? Why might we not want to do this? How does it shape the interpretation?
 > I had a hard time answering this one...
@@ -199,12 +199,18 @@ nhgis$percentage.foreign.male <- c(nhgis$AZF003 / nhgis$total_male_pop) * 100
 
 (@) Now map your result. You'll want to replicate the code from the example above, but this time add another layer to the plot - a scale. Here we'll use this scale `scale_fill_continuous("", labels = scales::percent)`
 
+
 Before you write that code, look up the documentation for the above code (and look at the examples). What does it do? 
 
->
+> it asigns fill color scales for continuous data values. 
+
 Now create the map: 
 ```{r}
+ggplot(data = nhgis, aes(fill = percentage.foreign.male)) +
+  geom_sf() +
+  scale_fill_continuous("", labels = scales::percent)
 ```
+## this is a horrible map.
 
 ### Leaflet
 
@@ -233,6 +239,18 @@ leaflet(data=rec.data.coordinates) %>% addTiles() %>% addMarkers(~longitude, ~la
 
 (@) Use leaflet to map a dataset of your choice: 
 ```{r}
+data(gayguides)
+
+gayguides.85 <- gayguides %>%
+  filter(Year == 1985) %>%
+  group_by(city, state) %>%
+  summarize(count = n())
+
+gayguides.85$city.address <- paste(gayguides.85$city, ", ", gayguides.85$state)
+
+gayguides.85 <- gayguides.85 %>% geocode(address = city.address, lat=latitude, long=longitude)
+
+leaflet(data=gayguides.85) %>% addTiles() %>% addMarkers(~longitude, ~latitude, popup = paste("The total locations in ", gayguides.85$city, ", ", gayguides.85$state, " were ",  gayguides.85$count, "in 1985"))
 ```
 
 (@) Explain what choices you made in building this map? Why might you use leaflet over ggplot? When would ggplot be more desirable? 
