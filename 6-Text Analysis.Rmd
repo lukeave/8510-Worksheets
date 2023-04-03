@@ -100,6 +100,9 @@ The function `unnest_tokens()` also has an option called token. Tokenizing by wo
 
 (@)Use the documentation to tokenize the dataset into sentences: 
 ```{r}
+sent_sotu <- sotu_whole %>%
+  unnest_tokens(sentence, text, token = "sentences")
+sent_sotu
 ```
 
 We've talked about n-grams loosely in class. But lets define it more formally. An n-gram is a contiguous sequence of n items from a given sample of text or speech. The n stands for the number of items. So for example, a bi-gram is sets of two words. 
@@ -119,6 +122,9 @@ head(sotu_bigrams$bigram)
 
 (@) Use `unest_tokens()` to create tri-grams. 
 ```{r}
+sotu_trigrams <- sotu_whole %>%
+  unnest_tokens(trigram, text, token = "ngrams", n = 3)
+head(sotu_trigrams$trigram)
 ```
 
 ### Stopwords
