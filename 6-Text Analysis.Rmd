@@ -187,7 +187,22 @@ tidy_sotu <- sotu_whole %>%
 ```
 (@) Before we move forward, take a minute a describe the chunk of code you just ran. What does each section do and how does it reflect the workflow for a topic modeling project? What are the important steps that are unique to topic modeling? 
 
->
+> meta <- as.data.frame(sotu_meta)
+#here, we retrieve metadata for the State of the Union Addresses and store it as a dataframe.
+file_paths <- sotu_dir(dir = "sotu_files")
+sotu_texts <- readtext(file_paths)
+sotu_whole <- 
+  sotu_meta %>%  
+  arrange(president) %>% # sort metadata
+  bind_cols(sotu_texts) %>% # combine with texts
+  as_tibble() 
+#here, we combine metadata and data to form the corpus object to be preprocessed and analyzed.
+tidy_sotu <- sotu_whole %>%
+  unnest_tokens(word, text) %>% 
+  anti_join(stop_words)
+#here, we preprocess the corpus and turn it into tidy text data through tokenization. 
+
+> These steps are the first part of a workflow for a topic modeling that takes the tidy text data after preprocessing and unveils the abstract themes in the corpus, separating words into topics.
 
 The most basic kind of analysis we might be interested in doing is counting words. We can do that easily using the `count()` function: 
 ```{r}
