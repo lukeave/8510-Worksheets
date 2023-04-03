@@ -237,10 +237,25 @@ tidy_sotu %>%
 ```
 
 (@) Think back to the metadata that we loaded about these speeches. Why are more modern president's state of the union addresses shorter? 
+```{r}
+avg.words.sotu <- tidy_sotu %>%
+  count(president, doc_id) %>%
+  group_by(president) %>% 
+  summarize(avg_words = mean(n)) %>% 
+  arrange(desc(avg_words))
+```
 
->
+> I really couldn't answer this one. I even made a plot to see if visualizing the numbers would help me understand why they are shorter today. But it didn't. It feels like I could be missing some historical context here?
+
 (@) Filter the dataset to address this discrepancy and the recreate these statistics: 
 ```{r}
+avg.words.sotu <- avg.words.sotu %>%
+  left_join(y = meta, by = "president")
+
+avg.words.sotu %>%
+    ggplot(aes(year, avg_words, colour = sotu_type)) +
+  geom_line() +
+  geom_point()
 ```
 
 ### Term Frequency
