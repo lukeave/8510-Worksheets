@@ -1,7 +1,7 @@
 ---
 title: 'Worksheet 6: Text Analysis'
-author: ''
-date: ''
+author: 'Lucas Avelar'
+date: 'April 3, 2023'
 ---
 
 _This is the sixth in a series of worksheets for History 8510 at Clemson University. The goal of these worksheets is simple: practice, practice, practice. The worksheet introduces concepts and techniques and includes prompts for you to practice in this interactive document. When you are finished, you should change the author name (above), knit your document, and upload it to canvas. Don't forget to commit your changes as you go and push to github when you finish the worksheet._
@@ -13,7 +13,7 @@ Text analysis is an umbrella for a number of different methodologies. Generally 
   1. Acquiring a corpus
   2. Preparing the text or Pre-processing
   3. Choosing an analytical tool 
-    * (There are many different tools or methods for text analysis. Take a minute and Google        each of these methodologies: tf-idf, topic modeling, sentiment analysis, word vector            analysis, n-grams)
+    * (There are many different tools or methods for text analysis. Take a minute and Google        each of these methodologies: tf-idf, topic modeling, sentiment analysis, word vector analysis, n-grams)
   4. Analyzing the results
   
 In this worksheet we are focusing on basic text analysis. We'll learn how to load textual data into R, how to prepare it, and then how to analyze it using tf-idf or term-frequency according to inverse document frequency. 
