@@ -408,3 +408,37 @@ metadata <- read.csv("https://github.com/regan008/8510-TextAnalysisData/blob/mai
 ```
 
 (@) Add code chunks below and intersperse text to explain what you are doing and why. 
+```{r}
+mind.body <- readtext(file.path("~/Desktop/8510-Worksheets/txt"))
+
+#mind.body.whole <- metadata %>%  
+  #bind_cols(mind.body) %>% # combine with texts
+  #as_tibble() # convert to tibble
+#glimpse(mind.body.whole) 
+#well that did not work since the metadata is useless and it has more observations than the text data itself (?).
+
+#pre-processing: tokenization
+tidy.mind.body <- mind.body %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words_custom) #removing the stop words
+glimpse(tidy.mind.body)
+
+tidy.mind.body %>%
+  count(word, sort = TRUE) %>% #raw count of words
+  as.data.frame()
+
+tidy.mind.body %>%
+  filter(word %in% c("future", "past")) %>% #searching for the occurrance of words future and past
+  count(doc_id, word, sort = TRUE) %>% 
+  as.data.frame()
+
+mb.past.future <- tidy.mind.body %>%
+  filter(word %in% c("future", "past")) %>%
+  count(doc_id, word, sort = TRUE) %>%
+  filter(grepl("1900", doc_id) | grepl("1901", doc_id) | grepl("1902", doc_id) | grepl("1903", doc_id) | grepl("1904", doc_id)) 
+
+mb.past.future %>% 
+  ggplot(aes(doc_id, n, fill = word)) +
+  geom_bar(position = "dodge", stat = "identity")
+```
+
