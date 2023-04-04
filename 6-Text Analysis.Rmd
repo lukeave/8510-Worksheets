@@ -290,7 +290,7 @@ tidy_sotu_rel.freq <- tidy_sotu %>%
 We can assume that words with a high frequency in the text are more important or significant. Here we can find the words with the most significance for each president: 
 ```{r}
 tidy_sotu %>%
-  count(president, word)  %>%  # count n for each word
+  count(president, word) %>%  # count n for each word
   group_by(president) %>% 
   mutate(n_tot = sum(n), # count total number of words per doc
          term_freq = n/n_tot) %>% 
@@ -299,8 +299,8 @@ tidy_sotu %>%
   print(n = Inf) # print all rows
 ```
 (@) The code above is commented to help you follow it. Walk through the code above, and explain what each line does in your own words. If its a function you are unfamiliar with, look up the documentation.
+> First, count() counts the amount of times each word is used by each president. Then, the code groups the result by president and uses mutate() to create a new column in the dataframe called "n_tot" containing the number of words in total in each document, per president. it also creates another colum called "term_freq" that containes the term frequency for each word. Then, it sorts out by the highest term frequency and it uses the funciton top_n() with n = 1, which retrieves the first observation in the dataframe for each president.
 
-> 
 ### TF-IDF
 
 The above measures the frequency of terms within individual documents. But what if we know about words that seem more important based on the contents of the **entire** corpus? That is where tf-idf or term-frequency according to inverse document frequency comes in. 
