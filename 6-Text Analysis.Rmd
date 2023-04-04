@@ -384,6 +384,15 @@ sotu_word_pairs %>%
 ```
 (@) Create a network graph that shows the relationship between words that appear between 125 and 175 times.
 ```{r}
+sotu_word_pairs %>% 
+  filter(n == 125:175) %>%  # only word pairs that occur 200 or more times
+  graph_from_data_frame() %>% #convert to graph
+  ggraph(layout = "fr") + # place nodes according to the force-directed algorithm of Fruchterman and Reingold
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "tomato") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE, 
+                 point.padding = unit(0.2, "lines")) +
+  theme_void()
 ```
 
 ## Analyzing Historical Journals
@@ -392,10 +401,10 @@ In the github repository below I have included the text and metadata for a journ
 
 ```{r}
 #zip file of all the .txt files. One for each issue. 
-download.file("https://github.com/regan008/8510-TextAnalysisData/blob/main/txt.zip?raw=true", "MindAndBody.zip")
+download.file("https://github.com/regan008/8510-TextAnalysisData/blob/main/MindAndBody.zip?raw=true", "MindAndBody.zip")
 unzip("MindAndBody.zip")
 # Metadata that includes info about each issue.
-metadata <- read.csv("https://raw.githubusercontent.com/regan008/8510-TextAnalysisData/main/Metadata.csv")
+metadata <- read.csv("https://github.com/regan008/8510-TextAnalysisData/blob/main/mb-metadata.csv")
 ```
 
 (@) Add code chunks below and intersperse text to explain what you are doing and why. 
