@@ -229,34 +229,49 @@ tidy_sotu %>%
 
 We also might want to ask about the average length of each president's state of the union address. Who had the longest speech and who had the shortest?
 ```{r}
-tidy_sotu %>%
-  count(president, doc_id)  %>% 
-  group_by(president) %>% 
-  summarize(avg_words = mean(n)) %>% 
-  arrange(desc(avg_words))
-```
-
-(@) Think back to the metadata that we loaded about these speeches. Why are more modern president's state of the union addresses shorter? 
-```{r}
-avg.words.sotu <- tidy_sotu %>%
+test3 <- tidy_sotu %>%
   count(president, doc_id) %>%
-  group_by(president) %>% 
+  group_by(doc_id) %>% 
   summarize(avg_words = mean(n)) %>% 
   arrange(desc(avg_words))
 ```
+> I think the code above does not answer the question since it gives the average of word count per president. To answer who had the longest and shortest speech respectively, I would write the following code:
 
-> I really couldn't answer this one. I even made a plot to see if visualizing the numbers would help me understand why they are shorter today. But it didn't. It feels like I could be missing some historical context here?
+```{r}
+test <- tidy_sotu %>%
+  select(president, sotu_type, doc_id) %>%
+  group_by(president, doc_id) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count))
+```
+
+> Jimmy Carter made the longest address while Dwight D. Eisenhower made the shortest. 
+
+(@) Think back to the metadata that we loaded about these speeches. Why are more modern president's state of the union addresses shorter
+```{r}
+test2 <- tidy_sotu %>%
+  select(sotu_type, doc_id) %>%
+  group_by(sotu_type, doc_id) %>% 
+  summarize(average = mean(n)) %>% 
+  arrange(desc(average))
+```
+
+
+> Johm Adams' short SOTUS was a spoken speech while William Taft's long SOTUS was a written speech.
 
 (@) Filter the dataset to address this discrepancy and the recreate these statistics: 
 ```{r}
-avg.words.sotu <- avg.words.sotu %>%
-  left_join(y = meta, by = "president")
+vis.avg.word <- tidy_sotu %>%
+  group_by(sotu_type, president, doc_id) %>%
+  count(doc_id) %>%
+  group_by(sotu_type, president) %>%
+  summarize(average = mean(n)) %>% 
+  arrange(desc(average))
 
-avg.words.sotu %>%
-    ggplot(aes(year, avg_words, colour = sotu_type)) +
-  geom_line() +
-  geom_point()
-```
+plot <- ggplot(vis.avg.word, mapping = aes(x = president, y = average, fill = sotu_type)) +
+  geom_bar(position = "dodge", stat = "identity") + coord_flip()
+ggsave(plot, filename="myfigure.png")
+``` 
 
 ### Term Frequency
 Often, the raw frequency of a term is not as useful as relative frequency. In other words, how often that word appears relative to the total number of words in a text. This ratio is called **term frequency**. 
