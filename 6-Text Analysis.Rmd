@@ -311,12 +311,12 @@ Don't worry too much about how tf-idf is calculated. But if you feel like you ar
 
 We'll calculate tf-idf in the next code chunk but lets talk for a second about what that number will represent. It will be: 
 
-    * lower for words that appear frequently in many documents of the corpus, and lowest              when the word occurs in virtually all documents.
-    * higher for words that appear frequently in just a few documents of the corpus,                  this lending high discriminatory power to those few documents.
+    * lower for words that appear frequently in many documents of the corpus, and lowest when the word occurs in virtually all documents.
+    * higher for words that appear frequently in just a few documents of the corpus,this lending high discriminatory power to those few documents.
 
 Luckily, `tidytext` provides a function for calculating tf-idf. To calculate tf-idf the function needs a list of every word in every document and the count. Like this: 
 ```{r}
-tidy_sotu %>%
+word.count <- tidy_sotu %>%
   count(doc_id, word, sort = TRUE)  
 ```
 We can feed that to the function and get the tf-idf: 
@@ -337,6 +337,21 @@ sotu.tf.idf %>% arrange(desc(tf_idf))
 (@) Pick a president who served more than one term. Filter the dataset and generate both raw word counts and tf-idf scores for that president. What words are most significant in each method? Why and what does that tell you about that president? 
 
 ```{r}
+stop_words_custom <- stop_words %>% add_row(word="america", lexicon="NA") %>% 
+  add_row(word="american", lexicon="NA") %>% 
+  add_row(word="americans", lexicon="NA") %>% 
+  add_row(word="people", lexicon="NA")
+
+obama.words <- tidy_sotu %>%
+  filter(president == "Barack Obama") %>%
+  anti_join(stop_words_custom) %>% 
+  group_by(doc_id) %>%
+  count(word) %>%
+  arrange(desc(n))
+
+obama.words <- obama.words %>% bind_tf_idf(word, doc_id, n) 
+head(obama.words)
+
 ```
 
 ### Co-Occurance
