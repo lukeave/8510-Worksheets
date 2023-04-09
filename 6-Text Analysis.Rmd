@@ -424,13 +424,13 @@ tidy.mind.body <- mind.body %>%
 glimpse(tidy.mind.body)
 
 tidy.mind.body %>%
-  count(word, sort = TRUE) %>% #raw count of words
-  as.data.frame()
+  count(word, sort = TRUE) #%>% #raw count of words
+ # as.data.frame()
 
 tidy.mind.body %>%
   filter(word %in% c("future", "past")) %>% #searching for the occurrance of words future and past
-  count(doc_id, word, sort = TRUE) %>% 
-  as.data.frame()
+  count(doc_id, word, sort = TRUE) #%>% 
+  #as.data.frame()
 
 mb.past.future <- tidy.mind.body %>%
   filter(word %in% c("future", "past")) %>%
