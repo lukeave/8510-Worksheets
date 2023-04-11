@@ -151,15 +151,92 @@ mb.dtm <- tidy_mb_words %>%
   cast_dtm(Filename, word, n)
 
 mb.lda <- LDA(mb.dtm, k = 25, control = list(seed = 12345))
+
+mb.topics <- tidy(mb.lda, matrix = "beta")
+head(mb.topics)
+
+mb.top.terms <- mb.topics %>%
+  group_by(topic) %>%
+  top_n(10, beta)
+
+mb.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+mb.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  filter(topic == 1 | topic == 2 | topic == 3) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 ```
 
 (@) What happens if you create a custom stopword list? How does this change the model?
 ```{r}
+stop_words_custom <- stop_words %>% add_row(word="left", lexicon="NA") %>% add_row(word="mind*", lexicon="NA") %>%
+  add_row(word="body", lexicon="NA") %>% 
+  add_row(word="bodies", lexicon="NA")
+
+mb.top.terms <- mb.top.terms %>%
+  filter(!term %in% stop_words_custom$word)
+
+mb.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+mb.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  filter(topic == 1 | topic == 2 | topic == 3) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 
 ```
 
 (@) Can you create a topic model for just the documents in the 1920s? How does that change the model? 
 ```{r}
+mb_whole.subset <- subset(mb_whole, grepl("^192", mb_whole$Year))
+tidy_mb <- mb_whole.subset %>%
+  unnest_tokens(word, text) %>% 
+  filter(str_detect(word, "[a-z']$")) %>% 
+  anti_join(stop_words_custom)
+
+tidy_mb_words <- tidy_mb %>% count(Filename, word)
+
+mb.dtm <- tidy_mb_words %>% 
+  cast_dtm(Filename, word, n)
+
+mb.lda <- LDA(mb.dtm, k = 25, control = list(seed = 12345))
+
+mb.topics <- tidy(mb.lda, matrix = "beta")
+head(mb.topics)
+
+mb.top.terms <- mb.topics %>%
+  group_by(topic) %>%
+  top_n(10, beta)
+
+mb.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
+
+mb.top.terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  filter(topic == 1 | topic == 2 | topic == 3) %>% 
+  ggplot(aes(beta, term, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  scale_y_reordered()
 ```
 
 
