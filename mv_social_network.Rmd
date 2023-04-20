@@ -1,0 +1,101 @@
+---
+output: html_document
+---
+<style type="text/css">
+h6 { /* Header 6 */
+ font-size: 10px;
+ color: black;
+ text-align: center
+}
+</style>
+
+### Social Network of Enslaved Community at Mount Vernon, 1754-1799
+
+This visualization is a social network of 517 enslaved people at Mount Vernon or linked to the estate from 1754 to 1799. Each icon (node) represents one individual, and the connections (edges) between icons indicate known family relationships, such as children, spouses, and siblings. Those people alive in 1799 and documented on George Washington's 1799 census are color-coded by farm, with yellow icons representing people who lived outside of Mount Vernon. Gray icons represent people who were either deceased, sold, or had run away by 1799. Because multiple people had the same name, the capital letter following each first name functions only as a distinguisher. It does not represent the last name of the individual.  
+
+To use this visualization, select the name of a person from the "Select by id" menu. The names of people featured in the <a href="http://www.mountvernon.org/plan-your-visit/calendar/exhibitions/lives-bound-together-slavery-at-george-washingtons-mount-vernon/" target="blank">Lives Bound Together: Slavery at George Washington's Mount Vernon" exhibit</a> are in uppercase. Select a farm to highlight from the "Select by location" menu. Zoom out to see the overall network and zoom in to focus on one person or family group. Click on each person to reveal their primary kinship connections and drag the nodes to explore each family group. Refresh the page to display the original graph. To learn more about these individuals, explore the <a href="http://www.mountvernon.org/george-washington/slavery/slavery-database/" target="blank">Mount Vernon Slavery Database</a>.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+library(visNetwork)
+library(igraph) #load the necessary libraries
+library(dplyr)
+library(tidyr)
+```
+
+````{r, message=FALSE, warning=FALSE, echo=FALSE}
+#read in the relationship table 
+  rel_1799 <- read.csv("~/Desktop/8510-Worksheets/collini.data/edges_040816.csv", stringsAsFactors = FALSE) 
+rel_1799 <- as.data.frame(rel_1799)
+
+#read in the node list with gender, farm, and owner
+nodes <- read.csv("~/Desktop/8510-Worksheets/collini.data/nodes_040816.csv", stringsAsFactors = FALSE) 
+nodes <- as.data.frame(nodes)
+````
+
+````{r, message=FALSE, warning=FALSE, echo=FALSE}
+edges <- rel_1799 %>%
+  mutate(title = rel_1799$relationship[1:1061]) %>%
+  mutate(color = ifelse(rel_1799$relationship == "Spouse", "red",
+                        ifelse(rel_1799$relationship == "Child", "darkcyan",
+                               ifelse(rel_1799$relationship == "Suspected Child", "darkcyan",
+                                      ifelse(rel_1799$relationship == "Suspected Spouse", "red",
+                                             ifelse(rel_1799$relationship == "Suspected Sibling", "orange",
+                                                    ifelse(rel_1799$relationship == "Sibling", "orange", "gray"))))))) 
+````
+
+````{r, message=FALSE, warning=FALSE, echo=FALSE}
+#customize the nodes by shape and color in network
+nodes <- nodes %>%
+  mutate(title = (nodes$id[1:517])) %>%
+  mutate(shape = ifelse(nodes$Gender == "Female", "dot", 
+                        ifelse(nodes$Gender == "Male", "square", "triangle"))) %>%
+  mutate(color = ifelse(nodes$location == "Mansion House" & nodes$Census == "1799", "orange",
+                        ifelse(nodes$location == "Muddy Hole" & nodes$Census == "1799", "lightcoral",
+                               ifelse(nodes$location == "Union Farm" & nodes$Census == "1799", "yellowgreen",
+                                      ifelse(nodes$location == "River Farm" & nodes$Census == "1799", "royalblue",
+                                             ifelse(nodes$location == "Dogue Run" & nodes$Census == "1799", "mediumturquoise",
+                                                    ifelse(nodes$location == "Mill Complex" & nodes$Census == "1799", "mediumturquoise", 
+                                                           ifelse(nodes$location == "Other Location" & nodes$Census == "1799", "gold", "lightgray"))))))))
+                                                           
+````
+
+````{r, message=FALSE, warning=FALSE, echo=FALSE}
+#make data frames for node and edge legends  
+ledges <- data.frame(color = c("red", "darkcyan", "orange"),
+                     label = c("Spouse", "Child", "Sibling"))
+lnodes <- data.frame(label = c("Mansion House", "Muddy Hole", "Union Farm", "River Farm", "Dogue Run", "Other Location", "Not Active", "Female", "Male", "Unknown"),
+                     shape = c("ellipse", "ellipse", "ellipse", "ellipse", "ellipse", "ellipse", "ellipse", "dot", "square", "triangle"), 
+                     color = c("orange", "lightcoral", "yellowgreen", "royalblue", "mediumturquoise", "gold", "lightgray", "lightgray", "lightgray", "lightgray"),
+                     id = 1:10) 
+````
+
+
+```{r, echo=FALSE}
+edges <- edges %>% rename(from = id, to = id.1)
+visNetwork(nodes, edges, height = 650, width = 1100) %>%
+  visIgraphLayout(layout = "layout_with_fr", randomSeed = 12) %>% #layout by family structure
+  visNodes(size = 8, shape = nodes$shape, 
+           label = paste("id"),
+           color = nodes$color,
+           title = title,
+           font = list("size" = 10)) %>%
+  visEdges(color = list(color = edges$color, opacity = 0.2),
+           hoverWidth = 1,
+           selectionWidth = 6) %>%
+  visOptions(highlightNearest = list("degree" = 1),
+             selectedBy = list("variable" = "location"),
+             nodesIdSelection = TRUE) %>%
+  visInteraction(dragNodes = TRUE,
+                 hover = TRUE,
+                 hoverConnectedEdges = TRUE,
+                 multiselect = TRUE) %>%
+  visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE, width = 3, position = "left")
+````
+
+
+
+
+###### Data pulled from the Mount Vernon Slavery Database (Microsoft Access version), April 8, 2016. Visualization by Sara Collini. To learn more about this visualization, read this <a href="http://www.saracollini.org/exploring-the-mount-vernon-enslaved-community-using-network-analysis/" target="blank">blog post</a>. Thank you to Molly Kerr, Esther White, Eleanor Breen, and all of the volunteers and interns who worked on the Mount Vernon Slavery Database for their tremendous efforts to uncover information about these individuals. Thank you also to Jannelle Legg, Amanda Regan, and other faculty and students in the History department at George Mason University and the Roy Rosenzweig Center for History and New Media for their invaluable advice and support. 
