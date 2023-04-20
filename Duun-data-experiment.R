@@ -32,9 +32,9 @@ nodes$LIWID <- as.character(nodes$LIWID)
 edges$LIWID <- as.character(edges$LIWID)
 
 #format the nodes
-nodes$individual <- paste(nodes$Forename.Std, nodes$Surname.Std, sep = " ")
+nodes$id <- paste(nodes$Forename.Std, nodes$Surname.Std, sep = " ")
 nodes <- nodes %>% 
-  select(LIWID, individual)
+  select(LIWID, id)
 
 #create a new operator because I forgot the one that already exists for this
 '%!in%' <- function(x,y)!('%in%'(x,y))
@@ -56,39 +56,37 @@ which(edges=="1115.01",arr.ind=TRUE)
 edges <- edges[-3531,] #ID1115.01 referred to uxori Rog Mortuamari in edges, but individual does not show up in nodes data; removed row.
 
 #format the edges
+##customize the edges by color
+edges <- edges %>% 
+  mutate(title = edges$ServiceType[1:3972]) %>% 
+  mutate(color = ifelse(edges$ServiceType == "RewardorGrant", "#FF0000",
+                        ifelse(edges$ServiceType == "Duty", "#66FFFF",
+                               ifelse(edges$ServiceType == "Placement", "#33FF33",
+                                      ifelse(edges$ServiceType == "Travel", "#FF9933",
+                                             ifelse(edges$ServiceType == "Livery", "#FFFF00",
+                                                    ifelse(edges$ServiceType == "pp", "#9933FF",
+                                                           ifelse(edges$ServiceType == "Other", "#CCCCCC", "#666666")))))))) 
+
 edges <- edges %>% 
   left_join(nodes, edges, by=c("LIWID"="LIWID"), multiple = "all")
-edges <- edges[, c(2, 1, 3, 4)]
+edges <- edges[, c(6, 2, 3, 4, 5, 1)]
 
 colnames(edges)[1] <- "from"
 colnames(edges)[2] <- "to"
 
 #include the names of the royalties (edges[, 2]) in new nodes list
-new.nodes <- c(edges$HouseholdifRoyal, nodes$individual) %>% 
+new.nodes <- c(edges$to, nodes$id) %>% 
   as.data.frame()
 
-colnames(new.nodes)[1] <- "individual"
+colnames(new.nodes)[1] <- "id"
 
-new.nodes <- new.nodes[!duplicated(new.nodes$individual), ] %>% 
+new.nodes <- new.nodes[!duplicated(new.nodes$id), ] %>% 
   as.data.frame()
 
 colnames(new.nodes)[1] <- "id"
 
 new.nodes <- new.nodes %>% 
-  filter(id != "" & individual != " ")
-
-
-
-#customize the edges by color
-edges <- edges %>% 
-  mutate(title = edges$ServiceType[1:3974]) %>% 
-  mutate(color = ifelse(edges$ServiceType == "RewardorGrant", "#FF0000",
-                      ifelse(edges$ServiceType == "Duty", "#66FFFF",
-                             ifelse(edges$ServiceType == "Placement", "#33FF33",
-                                    ifelse(edges$ServiceType == "Travel", "#FF9933",
-                                           ifelse(edges$ServiceType == "Livery", "#FFFF00",
-                                                  ifelse(edges$ServiceType == "pp", "#9933FF",
-                                                         ifelse(edges$ServiceType == "Other", "#CCCCCC", "#666666")))))))) 
+  filter(id != "" & id != " ")
 
 #count the amount of service types per id/person
 edges <- edges %>% 
@@ -103,7 +101,7 @@ new.nodes <- na.exclude(new.nodes)
 ##I wish the data provided the gender for each person so we could symbolize them differently, but for now the only representation for the nodes will be general dots.
 new.nodes <- new.nodes %>%
   mutate(title = (new.nodes$id[1:1239])) %>%
-  mutate(shape = "dot") 
+  mutate(shape = "circle") 
 
 #make data frames for node and edge legends  
 ledges <- data.frame(color = c("#FF0000", "#66FFFF", "#33FF33", "#FF9933", "#FFFF00", "#9933FF", "#CCCCCC"),
@@ -113,7 +111,7 @@ lnodes <- data.frame(label = new.nodes$id)
 #create network visualization
 visNetwork(new.nodes, edges, height = 650, width = 1100) %>%
   visIgraphLayout(layout = "layout_with_fr", randomSeed = 12) %>% #layout by family structure
-  visNodes(size = 6, shape = "circle", 
+  visNodes(size = 6, shape = new.nodes$shape, 
            label = new.nodes$id,
            color = "orange",
            title = new.nodes$id,
