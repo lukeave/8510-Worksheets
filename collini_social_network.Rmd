@@ -27,11 +27,11 @@ library(tidyr)
 
 ````{r, message=FALSE, warning=FALSE, echo=FALSE}
 #read in the relationship table 
-  rel_1799 <- read.csv("~/Desktop/8510-Worksheets/collini.data/edges_040816.csv", stringsAsFactors = FALSE) 
+  rel_1799 <- read.csv("edges_040816.csv", stringsAsFactors = FALSE) 
 rel_1799 <- as.data.frame(rel_1799)
 
 #read in the node list with gender, farm, and owner
-nodes <- read.csv("~/Desktop/8510-Worksheets/collini.data/nodes_040816.csv", stringsAsFactors = FALSE) 
+nodes <- read.csv("nodes_040816.csv", stringsAsFactors = FALSE) 
 nodes <- as.data.frame(nodes)
 ````
 
@@ -51,7 +51,8 @@ edges <- rel_1799 %>%
 nodes <- nodes %>%
   mutate(title = (nodes$id[1:517])) %>%
   mutate(shape = ifelse(nodes$Gender == "Female", "dot", 
-                        ifelse(nodes$Gender == "Male", "square", "triangle"))) %>%
+                        ifelse(nodes$Gender == "Male", "square", 
+                               "triangle"))) %>%
   mutate(color = ifelse(nodes$location == "Mansion House" & nodes$Census == "1799", "orange",
                         ifelse(nodes$location == "Muddy Hole" & nodes$Census == "1799", "lightcoral",
                                ifelse(nodes$location == "Union Farm" & nodes$Census == "1799", "yellowgreen",
@@ -92,7 +93,7 @@ visNetwork(nodes, edges, height = 650, width = 1100) %>%
                  hover = TRUE,
                  hoverConnectedEdges = TRUE,
                  multiselect = TRUE) %>%
-  visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE, width = 3, position = "left")
+  visLegend(addEdges = ledges, addNodes = lnodes, useGroups = FALSE, width = 0.12, position = "left")
 ````
 
 

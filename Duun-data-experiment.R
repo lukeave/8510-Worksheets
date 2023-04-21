@@ -1,15 +1,8 @@
-library(tidytext)
 library(tidyverse)
-library(readtext)
-library(tm)
-library(topicmodels)
 library(ggplot2) 
 library(DigitalMethodsData)
-library(ggmap)
-library(tidygeocoder)
-library(leaflet)
 library(visNetwork)
-library(igraph) #load the necessary libraries
+library(igraph) 
 library(dplyr)
 library(tidyr)
 
@@ -56,16 +49,6 @@ which(edges=="1115.01",arr.ind=TRUE)
 edges <- edges[-3531,] #ID1115.01 referred to uxori Rog Mortuamari in edges, but individual does not show up in nodes data; removed row.
 
 #format the edges
-##customize the edges by color
-edges <- edges %>% 
-  mutate(title = edges$ServiceType[1:3972]) %>% 
-  mutate(color = ifelse(edges$ServiceType == "RewardorGrant", "#FF0000",
-                        ifelse(edges$ServiceType == "Duty", "#66FFFF",
-                               ifelse(edges$ServiceType == "Placement", "#33FF33",
-                                      ifelse(edges$ServiceType == "Travel", "#FF9933",
-                                             ifelse(edges$ServiceType == "Livery", "#FFFF00",
-                                                    ifelse(edges$ServiceType == "pp", "#9933FF",
-                                                           ifelse(edges$ServiceType == "Other", "#CCCCCC", "#666666")))))))) 
 
 edges <- edges %>% 
   left_join(nodes, edges, by=c("LIWID"="LIWID"), multiple = "all")
@@ -90,8 +73,20 @@ new.nodes <- new.nodes %>%
 
 #count the amount of service types per id/person
 edges <- edges %>% 
-group_by(LIWID, ServiceType) %>% 
-mutate(count = n())
+group_by(from, to) %>% 
+summarize(count = n())
+
+##customize the edges by color
+#edges <- edges %>% 
+  #mutate(title = edges$ServiceType[1:3972]) %>% 
+  #mutate(color = ifelse(edges$ServiceType == "RewardorGrant", "#FF0000",
+                       # ifelse(edges$ServiceType == "Duty", "#66FFFF",
+                              # ifelse(edges$ServiceType == "Placement", "#33FF33",
+                                  #    ifelse(edges$ServiceType == "Travel", "#FF9933",
+                                            # ifelse(edges$ServiceType == "Livery", "#FFFF00",
+                                                 #   ifelse(edges$ServiceType == "pp", "#9933FF",
+                                                        #   ifelse(edges$ServiceType == "Other", "#CCCCCC", "#666666")))))))) 
+
 
 #exclude the NA values in both nodes and edges data
 edges <- na.exclude(edges)
